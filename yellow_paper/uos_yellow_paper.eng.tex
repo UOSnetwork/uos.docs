@@ -40,7 +40,7 @@ The problem of a distributed consensus for networks with potentially fraudulent 
 
 % Задача распределенного консенсуса для сетей, в которых узлы могут быть злоумышленниками (т.н. задача византийских генералов), впервые была сформулирована задолго до появления блокчейна - в 1982 г. \cite{Lamport} С тех пор был разработан целый ряд различных вариантов ее решения \cite{Castro}, однако применительно к блокчейнам первым вариантом решения проблемы стал изложенный в статье Сатоши Накамото \cite{satoshi} алгоритм Proof-of-Work (PoW, доказательство работы). Несмотря на свои преимущества PoW характеризуется рядом недостатков: проблемы с масштабируемостью и производительностью \cite{Croman}, безопасностью \cite{Eyal}, постепенная централизация сети в руках крупнейших майнинг-пулов \cite{Buterin}, и самое важное - необходимость использования значительного объема реальных ресурсов (электроэнергии и вычислительной техники) для генерации каждого \cite{Bentov}.
 
-By now, the computing resources needed for hashing blocks in Bitcoin, are tremendous and far exceed the computing power of the world’s greatest supercomputers. Energy use for mining is comparable to the power consumption of some countries and it continues to grow \cite{energy}. In 2012, in order to mitigate these shortcomings, the PPCoin (now known as PeerCoin)  cryptocurrency became the first to utilize an alternative consensus algorithm, Proof-of-Stake (PoS) \cite{Ppcoin}. In PoS consensus networks, the probability of creating a new block depends on the volume of tokens in a participant’s account. PoS also turns out to have several drawbacks and in its current state, according to a number of experts, cannot serve as an adequate replacement to PoW \cite{Demeester}, \cite{Poelstra}. One of the major weaknesses of PoS is that it additionally motivates users to concentrate all funds in one place or with one user, which leads to centralization of the network. The next iteration of PoS was introduced as the Delegated Proof-of-Stake (DPoS) \cite{dantheman}. Here network members are divided into two groups: members who delegate the authority to create blocks and validate transactions, and validators (witnesses). This partition provides better scalability and efficiency. Nevertheless, in DPoS there still remains the problem of motivation for a participant to use their assets actively instead of accumulating them, and that has a negative impact on the growth and governability of the network. The Proof-of-Importance consensus algorithm (PoI), was first introduced in the NEM cryptocurrency \cite{nem}. PoI incentivizes network participants' activity. The major departure from PoS is that block generation probability and reward distribution depends not only on the volume of a user's deposits but also on the participant's activity rate and reputation. Thus, the algorithm motivates users to be more active by participating in  more transactions and contributing to the network growth. Despite all its merits, POI has some shortcomings in efficiency. 
+By now, the computing resources needed for hashing blocks in Bitcoin, are tremendous and far exceed the computing power of the world’s greatest supercomputers. Energy use for mining is comparable to the power consumption of some countries and it continues to grow \cite{energy}. In 2012, in order to mitigate these shortcomings, the PPCoin (now known as PeerCoin)  cryptocurrency became the first to utilize an alternative consensus algorithm, Proof-of-Stake (PoS) \cite{Ppcoin}. In PoS consensus networks, the probability of creating a new block depends on the volume of tokens in a participant’s account. PoS also turns out to have several drawbacks and in its current state, according to a number of experts, cannot serve as an adequate replacement to PoW \cite{Demeester}, \cite{Poelstra}. One of the major weaknesses of PoS is that it additionally motivates users to concentrate all funds in one place or with one user, which leads to centralization of the network. The next iteration of PoS was introduced as the Delegated Proof-of-Stake (DPoS) \cite{dantheman}. Here network members are divided into two groups: members who delegate the authority to create blocks and validate transactions, and validators (producers). This partition provides better scalability and efficiency. Nevertheless, in DPoS there still remains the problem of motivation for a participant to use their assets actively instead of accumulating them, and that has a negative impact on the growth and governability of the network. The Proof-of-Importance consensus algorithm (PoI), was first introduced in the NEM cryptocurrency \cite{nem}. PoI incentivizes network participants' activity. The major departure from PoS is that block generation probability and reward distribution depends not only on the volume of a user's deposits but also on the participant's activity rate and reputation. Thus, the algorithm motivates users to be more active by participating in  more transactions and contributing to the network growth. Despite all its merits, POI has some shortcomings in efficiency. 
 
 % На сегодня вычислительные ресурсы, расходуемые на хеширование блоков в биткоине, огромны и намного превышают мощности крупнейших суперкомпьютеров, а расход энергии на майнинг сопоставим с потреблением электроэнергии целых стран и продолжает расти \cite{energy}.
 % Для устранения данных недостатков был придуман альтернативный алгоритм консенсуса - Proof-of-Stake (PoS, доказательство доли), впервые реализованный в 2012 году в криптовалюте PPCoin (сейчас известна под названием PeerCoin) \cite{Ppcoin}. В сетях с консенсусом PoS вероятность сформировать следующий блок зависит от объема токенов на депозите участника сети. Данный алгоритм также обладает рядом недостатков и, по мнению ряда экспертов, в текущем виде не является адекватной заменой PoW \cite{Demeester} \cite{Poelstra}. Одним из важнейших недостатков PoS является то, что он дает дополнительную мотивацию к накоплению средств в одних руках, что способствует централизации сети.
@@ -55,9 +55,9 @@ The major goal of UOS is to create a distributed ledger data management protocol
 
 \section{UOS Protocol Consensus Algorithm Operating Principle}
 
-The UOS consensus algorithm (Delegated Proof-of-Importance, DPoI) is based on the Graphene core consensus algorithm. In addition to the client's stake amount, our algorithm also considers the client's transactional activity. In UOS Protocol, all of the participants have the option of delegating the right to validate blocks to a limited number of accounts. To prevent activity imitation or fraud between several affiliated accounts, the transaction graph is partitioned into clusters utilizing the SCAN algorithm  \cite{SCAN}. In general, the working principle of the UOS Protocol Consensus Algorithm can be explained as follows.
+The UOS consensus algorithm (Delegated Proof-of-Importance, DPoI) is based on the EOS core consensus algorithm. In addition to the client's stake amount, our algorithm also considers the client's transactional activity. In UOS Protocol, all of the participants have the option of delegating the right to validate blocks to a limited number of accounts. To prevent activity imitation or fraud between several affiliated accounts, the transaction graph is partitioned into clusters utilizing the SCAN algorithm  \cite{SCAN}. In general, the working principle of the UOS Protocol Consensus Algorithm can be explained as follows.
 
-% Алгоритм консенсуса UOS базируется на алгоритме Делегированное доказательство значимости (Delegated Proof of Importance, DPoI), основанном на изменённом ядре Graphene, учитывая дополнительно к доли владения узла его транзакционную активность. 
+% Алгоритм консенсуса UOS базируется на алгоритме Делегированное доказательство значимости (Delegated Proof of Importance, DPoI), основанном на изменённом ядре EOS, учитывая дополнительно к доли владения узла его транзакционную активность. 
 % В протоколе UOS всем аккаунта сети доступна возможность делегировать право валидировать блоки ограниченному кругу аккаунтов.
 % Для борьбы с имитацией активности между несколькими аффилированными аккаунтами используется разбиение транзакционного графа на кластеры с помощью алгоритма SCAN. В общих чертах принцип работы алгоритма консенсуса протокола UOS можно представить следующим образом:
 
@@ -334,15 +334,15 @@ $$
 
 \subsection{The use of importance index in the system}
 
-importance index is used for two purposes:
+Importance index is used for two purposes:
 
 First, it defines the amount of new tokens which every account receives in case the emission is positive. 
 
 Second, importance index defines the account’s weight during the voting. The voting allows the delegation  of certain powers within the system to a limited number of the accounts. 
 
-Witnesses who own nodes that produce and verify blocks are selected by voting.
+Producers who own nodes that produce and verify blocks are selected by voting.
 
-Members of the committee are also selected by voting. The committee can vote on blockchain settings, such as the fee amount for a transaction, witness node reward and so on. 
+Members of the committee are also selected by voting. The committee can vote on blockchain settings, such as the fee amount for a transaction, producer node reward and so on. 
 
 % Индекс значимости используется для двух целей. 
 % 
@@ -352,7 +352,7 @@ Members of the committee are also selected by voting. The committee can vote on 
 % 
 % Путем голосования выбираются узлы, которые осуществляют формирование блоков. 
 % 
-% Также путем голосования выбираются члены комитета. Комитет может голосованием менять параметры блокчейна, такие, как размер комиссии за трансфер, вознаграждение witness-нодам и т.п.
+% Также путем голосования выбираются члены комитета. Комитет может голосованием менять параметры блокчейна, такие, как размер комиссии за трансфер, вознаграждение producer-нодам и т.п.
 
 
 \section{The Protocol Token}
@@ -516,13 +516,13 @@ The importance index of an account is calculated as a function of Stake Volume I
 
 An entity represented by a tuple of pairs of keys (public + private), which is registered in a blockchain by an individual.
 
-\textbf{Witness}
+\textbf{Producer}
 
 Accounts with the right to verify blocks. They must have a node.
 
 \textbf{Node}
 
-A P2P network node, which performs all the calculations in blockchain. A node belonging to a witness account (witness node), produces blocks.
+A P2P network node, which performs all the calculations in blockchain. A node belonging to a producer account (producer node), produces blocks.
 
 \tableofcontents
 
