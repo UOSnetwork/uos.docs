@@ -269,12 +269,20 @@ So, a relation can connect either nodes of the same type or nodes of different t
 There are following kinds of relations:
 
 \begin{enumerate}
-    \item { Ownership: bi-directional relation bounding account and content;}
-    \item { Like: uni-directional relation from account to content;}
-    \item { Dislike: uni-directional relation from account to content;}
+    \item { Ownership: bi-directional relation bounding an account and a content item;}
+    \item { Like: uni-directional relation from an account to a content item;}
+    \item { Dislike: uni-directional relation from an account to a content item;}
     \item { Follow: uni-directional relation between two accounts; }
     \item { Trust: uni-directional relation between two accounts. }
+    \item { Comment: uni-directional relation between two content items. }
+    \item { Membership: bi-directional relation between a company and an account. }
 \end{enumerate}
+
+\begin{figure}[h]
+      \includegraphics[width=1\linewidth]{pictures/graph_example.eps}
+      \caption{Social network graph example}
+      \label{fig:sigmoida}
+\end{figure}
 
 
 Following recurrent equation is used for social network activity index calculation:
