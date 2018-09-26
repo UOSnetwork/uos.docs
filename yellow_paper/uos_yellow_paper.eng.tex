@@ -7,10 +7,11 @@
 \usepackage{colortbl}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{gensymb}
 
 \pagecolor[rgb]{1,.98,.9}
 
-\title{UOS: Distributed ledger data management protocol.}
+\title{U{\degree}OS: Distributed ledger data management protocol.}
 \author{}
 
 \begin{document}
@@ -19,9 +20,9 @@
 
 \begin{abstract}
 
-The concept of a cryptographically protected and distributed transaction ledger has demonstrated its efficiency in a series of projects. The fourth industrial revolution sets a new level of standards for decentralized protocols. The UOS project’s approach to the distributed ledger is filtered through the lens of the management of an ever-increasing sea of data produced by a digital society. The protocol architecture aims to correspond with this management  goal, using the Delegated Proof of Importance (DPoI) consensus algorithm. DPoI is a high-performance energy effective, network growth inducing algorithm that rewards network participants for the system's economy enhancing operations. Delegated Proof of Importance is an upgrade to the existing blockchain solutions that integrate the concepts of the Delegated Proof of Stake (DPoS) and the Network Theory. The system protocol is designed in accordance with business and end-user requirements such as privacy, transparency, and smooth volatility, which is achieved due to adaptive emissions proportionate to both network activity growth and the volume of the network itself, according to Metcalfe's law \cite{Metcalfe}.
+The concept of a cryptographically protected and distributed transaction ledger has demonstrated its efficiency in a series of projects. The fourth industrial revolution sets a new level of standards for decentralized protocols. The U{\degree}OS project’s approach to the distributed ledger is filtered through the lens of the management of an ever-increasing sea of data produced by a digital society. The protocol architecture aims to correspond with this management  goal, using the Delegated Proof of Importance (DPoI) consensus algorithm. DPoI is a high-performance energy effective, network growth inducing algorithm that rewards network participants for the system's economy enhancing operations. Delegated Proof of Importance is an upgrade to the existing blockchain solutions that integrate the concepts of the Delegated Proof of Stake (DPoS) and the Network Theory. The system protocol is designed in accordance with business and end-user requirements such as privacy, transparency, and smooth volatility, which is achieved due to adaptive emissions proportionate to both network activity growth and the volume of the network itself, according to Metcalfe's law \cite{Metcalfe}.
 
-% Концепция распределенного реестра транзакций защищенного криптографией продемонстрировала свою эффективность. Четвертая промышленная революция задает новый уровень требований к децентрализованным протоколам. Проект UOS смотрит на задачи распределенного реестра через призму потребностей управления увеличивающемся массивом данных, создаваемых в результате экономической деятельности в цифровом обществе.  Архитектура протокола стремиться соответствовать этой задаче, используя алгоритм консенсуса Делегированное доказательство значимости (Delegated Proof of Importance, DPoI). DPoI - высокопроизводительный, энергоэффективный и стимулирующий развитие сети алгоритм, вознаграждающий участников сети за операции, являющуюся положительной для экономики системы. Делегированное доказательство значимости развивает существующие блокчейн решения, объединяя концепции  Делегированного доказательства доли (Delegated Proof of Stake, DPoS) и Теории сетей. Протокол системы спроектирован с учетом требований бизнеса и рядовых пользователей, таких, как приватность, аудируемость, мягкая волатильность, достигаемая за счет динамической эмиссии пропорциональной росту активности сети, опираясь на Закон Меткалфа.. \cite{Metcalfe}.
+% Концепция распределенного реестра транзакций защищенного криптографией продемонстрировала свою эффективность. Четвертая промышленная революция задает новый уровень требований к децентрализованным протоколам. Проект U{\degree}OS смотрит на задачи распределенного реестра через призму потребностей управления увеличивающемся массивом данных, создаваемых в результате экономической деятельности в цифровом обществе.  Архитектура протокола стремиться соответствовать этой задаче, используя алгоритм консенсуса Делегированное доказательство значимости (Delegated Proof of Importance, DPoI). DPoI - высокопроизводительный, энергоэффективный и стимулирующий развитие сети алгоритм, вознаграждающий участников сети за операции, являющуюся положительной для экономики системы. Делегированное доказательство значимости развивает существующие блокчейн решения, объединяя концепции  Делегированного доказательства доли (Delegated Proof of Stake, DPoS) и Теории сетей. Протокол системы спроектирован с учетом требований бизнеса и рядовых пользователей, таких, как приватность, аудируемость, мягкая волатильность, достигаемая за счет динамической эмиссии пропорциональной росту активности сети, опираясь на Закон Меткалфа.. \cite{Metcalfe}.
 \end{abstract}
 
 \section{Introduction}
@@ -49,17 +50,17 @@ By now, the computing resources needed for hashing blocks in Bitcoin, are tremen
 
 \subsection{Project goal}
 
-The major goal of UOS is to create a distributed ledger data management protocol with effective power redistribution within the system, which motivates users to participate actively in network development and prevents centralization. Modern blockchain solutions have problems with scalability, security and efficiency, and to solve those problems, UOS Protocol introduces the DPoI (Delegated Proof of Importance) Consensus Algorithm. This consensus algorithm combines the advantages of DPoS and PoI and implements a new feature of delegating validation rights to a limited number of accounts in order to achieve high levels of efficiency and scalability within the network, accounting for transaction activity of the protocol members, and leading to its further development.
+The major goal of U{\degree}OS is to create a distributed ledger data management protocol with effective power redistribution within the system, which motivates users to participate actively in network development and prevents centralization. Modern blockchain solutions have problems with scalability, security and efficiency, and to solve those problems, U{\degree}OS Protocol introduces the DPoI (Delegated Proof of Importance) Consensus Algorithm. This consensus algorithm combines the advantages of DPoS and PoI and implements a new feature of delegating validation rights to a limited number of accounts in order to achieve high levels of efficiency and scalability within the network, accounting for transaction activity of the protocol members, and leading to its further development.
 
-% Цель UOS – создание протокола управления распределенным реестром с эффективным перераспределением влияния в системе, поощряющего пользователей принимать активное участие в развитии сети и препятствующего централизации. Для решения существующих в современных блокчейн решениях проблем с масштабируемостью, производительностью и безопасностью в протоколе UOS реализован алгоритм достижения консенсуса DPoI (Delegated Proof of Importance). Алгоритм сочетает в себе достоинства DPoS и PoI, обладая преимуществами оных, реализует возможность делегирования права валидации блоков ограниченному количеству аккаунтов для достижения высокой производительности и масштабируемости сети, учитывая транзакционную активность участников протокола, способствуя ее развитию. 
+% Цель U{\degree}OS – создание протокола управления распределенным реестром с эффективным перераспределением влияния в системе, поощряющего пользователей принимать активное участие в развитии сети и препятствующего централизации. Для решения существующих в современных блокчейн решениях проблем с масштабируемостью, производительностью и безопасностью в протоколе U{\degree}OS реализован алгоритм достижения консенсуса DPoI (Delegated Proof of Importance). Алгоритм сочетает в себе достоинства DPoS и PoI, обладая преимуществами оных, реализует возможность делегирования права валидации блоков ограниченному количеству аккаунтов для достижения высокой производительности и масштабируемости сети, учитывая транзакционную активность участников протокола, способствуя ее развитию. 
 
-\section{UOS Protocol Consensus Algorithm Operating Principle}
+\section{U{\degree}OS Protocol Consensus Algorithm Operating Principle}
 
-The UOS consensus algorithm (Delegated Proof-of-Importance, DPoI) is based on the EOS core consensus algorithm. In addition to the client's stake amount, our algorithm also considers the client's transactional activity. In UOS Protocol, all of the participants have the option of delegating the right to validate blocks to a limited number of accounts. To prevent activity imitation or fraud between several affiliated accounts, the transaction graph is partitioned into clusters utilizing the SCAN algorithm  \cite{SCAN}. In general, the working principle of the UOS Protocol Consensus Algorithm can be explained as follows.
+The U{\degree}OS consensus algorithm (Delegated Proof-of-Importance, DPoI) is based on the EOS core consensus algorithm. In addition to the client's stake amount, our algorithm also considers the client's transactional activity. In U{\degree}OS Protocol, all of the participants have the option of delegating the right to validate blocks to a limited number of accounts. To prevent activity imitation or fraud between several affiliated accounts, the transaction graph is partitioned into clusters utilizing the SCAN algorithm  \cite{SCAN}. In general, the working principle of the U{\degree}OS Protocol Consensus Algorithm can be explained as follows.
 
-% Алгоритм консенсуса UOS базируется на алгоритме Делегированное доказательство значимости (Delegated Proof of Importance, DPoI), основанном на изменённом ядре EOS, учитывая дополнительно к доли владения узла его транзакционную активность. 
-% В протоколе UOS всем аккаунта сети доступна возможность делегировать право валидировать блоки ограниченному кругу аккаунтов.
-% Для борьбы с имитацией активности между несколькими аффилированными аккаунтами используется разбиение транзакционного графа на кластеры с помощью алгоритма SCAN. В общих чертах принцип работы алгоритма консенсуса протокола UOS можно представить следующим образом:
+% Алгоритм консенсуса U{\degree}OS базируется на алгоритме Делегированное доказательство значимости (Delegated Proof of Importance, DPoI), основанном на изменённом ядре EOS, учитывая дополнительно к доли владения узла его транзакционную активность. 
+% В протоколе U{\degree}OS всем аккаунта сети доступна возможность делегировать право валидировать блоки ограниченному кругу аккаунтов.
+% Для борьбы с имитацией активности между несколькими аффилированными аккаунтами используется разбиение транзакционного графа на кластеры с помощью алгоритма SCAN. В общих чертах принцип работы алгоритма консенсуса протокола U{\degree}OS можно представить следующим образом:
 
 \subsection{Importance index Calculation}
 
@@ -245,7 +246,7 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 \subsection{Social network activity index}
 
-UOS blockchain is integrated with social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index.
+U{\degree}OS blockchain is integrated with social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index.
 
 Every type of node has its own social network activity index. We denote as $\boldsymbol{\sigma_A}$ the vector of account indices and as $\boldsymbol{\sigma_C}$ the vector of content indices. Both vectors are normalized to 1:
 
@@ -365,17 +366,17 @@ Members of the committee are also selected by voting. The committee can vote on 
 
 \section{The Protocol Token}
 
-The amount of transactions processed directly depends on the available computing power provided by network members. To allocate the resources efficiently and to avoid spam attacks, a fee in the protocol core cryptographic token is levied on the operations within the UOS network. The protocol allows a user to make token transfer transactions between the network members and launch system smart contracts, e.g. multi-signature, account registration, user tokens creation and so on.
+The amount of transactions processed directly depends on the available computing power provided by network members. To allocate the resources efficiently and to avoid spam attacks, a fee in the protocol core cryptographic token is levied on the operations within the U{\degree}OS network. The protocol allows a user to make token transfer transactions between the network members and launch system smart contracts, e.g. multi-signature, account registration, user tokens creation and so on.
 
-% Объём обрабатываемых операций блокчейн протоколом напрямую зависит от доступной вычислительной мощности, предоставленной участниками сети. Для эффективного распределения ресурсов системы и предотвращения spam атак, при совершении операций в сети UOS с пользователей удерживается комиссия системы в криптографическом токене протокола.. 
+% Объём обрабатываемых операций блокчейн протоколом напрямую зависит от доступной вычислительной мощности, предоставленной участниками сети. Для эффективного распределения ресурсов системы и предотвращения spam атак, при совершении операций в сети U{\degree}OS с пользователей удерживается комиссия системы в криптографическом токене протокола.. 
 % Протокол позволяет совершать транзакции трансфера токена между аккаунтами участников сети и вызова умных контрактов системы, таких как мульти-подпись, регистрация аккаунтов, создание пользовательских токенов и т.д.. 
 
 \section{Emission}
 
-Emission amount at launch is 1,000,000,000 protocol tokens, distributed to the original network accounts to start the protocol. The UOS project implements adaptive emission. The emission volume is calculated regularly once, in a certain time interval, $t_0, t_1, ... t_i$, where $t_{i+1} = t_i + T$. The volume of emission depends on the network activity growth in the preceding time period $T$.
+Emission amount at launch is 1,000,000,000 protocol tokens, distributed to the original network accounts to start the protocol. The U{\degree}OS project implements adaptive emission. The emission volume is calculated regularly once, in a certain time interval, $t_0, t_1, ... t_i$, where $t_{i+1} = t_i + T$. The volume of emission depends on the network activity growth in the preceding time period $T$.
 
 % Стартовая эмиссия составляет 1000000000 токенов протокола, распространяется по изначальным аккаунтам сети для запуска функционирования протокола.   
-% В проекте UOS используется динамическая эмиссия. Эмиссия производится регулярно, в моменты времени $t_0, t_1, ... t_i$, где $t_{i+1} = t_i + T$. Объем эмиссии зависит от роста активности сети за предыдущий период T.
+% В проекте U{\degree}OS используется динамическая эмиссия. Эмиссия производится регулярно, в моменты времени $t_0, t_1, ... t_i$, где $t_{i+1} = t_i + T$. Объем эмиссии зависит от роста активности сети за предыдущий период T.
 
 \subsection{Calculating network activity for a period of time}
 
@@ -512,7 +513,7 @@ $$
 
 \section {Appendix 1 Glossary of Terms}
 
-\textbf{UOS consensus algorithm (Delegated Proof-of-Importance, DPoI)}
+\textbf{U{\degree}OS consensus algorithm (Delegated Proof-of-Importance, DPoI)}
 
 The consensus algorithm, which is based on a calculation of the importance index of an account, which in turn depends on Stake Volume Index and Activity index
 
