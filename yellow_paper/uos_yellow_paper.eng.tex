@@ -75,7 +75,7 @@ Here $v_i$ is the stake volume index, $\pi_i$ is the finance activity index calc
 
 % Здесь $v_i$ – индекс доли владения, $\pi_i$ – индекс активности, полученный с помощью алгоритма NCDAwareRank, $\omega$ — весовой коэффициент.
 
-Stake volume index is based on the amount of tokens owned by the account, and represents balance relation to the total amount of tokens in the system. Thus, an account with non-zero balance has non-zero importance index. Activity index depends on transaction history of the account. Activity index is calculated only for accounts with the balance exceeding the $A_0$ threshold. This value is not fixed and is determined by committee members. When calculating the account activity index only transactions with the amount of tokens higher than $T_0$ are taken into account. That value is also determined by the committee. Hidden transactions are not included. Ancivity index depends on transactions, creation time of which lays in some time interval. The duration of this interval is $W$ blocks. Contribution of every transaction decreases exponentially.
+Stake volume index is based on the amount of tokens owned by the account, and represents balance relation to the total amount of tokens in the system. Thus, an account with non-zero balance has non-zero importance index. Activity index depends on transaction history of the account. Activity index is calculated only for accounts with the balance exceeding the $A_0$ threshold. This value is not fixed and is determined by committee members. When calculating the account activity index only transactions with the amount of tokens higher than $T_0$ are taken into account. That value is also determined by the committee. Hidden transactions are not included. Activity index depends on transactions, creation time of which lays in some time interval. The duration of this interval is $W$ blocks. Contribution of every transaction decreases exponentially.
 
 % Индекс доли владения определяется количеством токенов, принадлежащих эккаунту, и представляет собой отношение баланса эккаунта к общему количеству токенов в системе. Таким образом, у любого эккаунта с ненулевым балансом будет ненулевой индекс значимости. Индекс активности зависит от истории транзакций, связанных с данным эккаунтом. Индекс активности вычисляется не для всех эккаунтов, а только для тех, баланс которых на момент вычисления индекса превышает некоторый порог $A_0$. Это значение не является фиксированным, и определяется участниками комитета. Также при вычислении инекса активности учитываются не все транзакции, а только те, в которых сумма передаваемых токенов превышает порог $T_0$, который также определяется комитетом. Скрытые транзакции не учитываются при вычислении индекса активности. Учитываются транзакции не за все время, но только те, которые попадают во временное окно продолжительностью $W$ блоков. Вклад каждой каждой транзакции уменьшается со временем экспоненциально.
 
@@ -339,6 +339,18 @@ o_{XYij} = \begin{cases}
  0 & \text{otherwise}
 \end{cases} 
 $$
+
+\subsection{Resistance to attacks}
+
+Following mitigations are used in the project, in order to reduce the risk of attacks.
+
+\begin{itemize}
+  \item Only incoming transfers contribute to importance index, it makes obtaining score from existing accounts more difficult.
+  \item There are stake threshold for accounts, participating in importance index calculation, and amount threshold fot transfers. It makes attacks more expensive for attackers.
+  \item Using NCDAwareRank instead of PageRank makes the system more resistant to splitting account attacks. This algorythm gives preference to accounts, tightly integrated to common network.
+  \item Koefficients $\omega_a$ and $\omega_a$ have relatively small values, it makes contribution of activity index and social index to total importance index significantly less than stake contribution.
+  \item Using decaying weights makes effect of any fraud activity temporary. Stopping fraud activity causes quick decreasing obtained score.
+\end{itemize}
 
 
 \subsection{The use of importance index in the system}
