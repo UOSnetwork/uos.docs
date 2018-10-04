@@ -67,9 +67,11 @@ The U{\degree}OS consensus algorithm (Delegated Proof-of-Importance, DPoI) is ba
 Importance index, which is used in voting, and could be interpreted as an importance rating of an account \textit{i} is calculated as follows: 
 
 % Индекс значимости эккаунта вычисляется следующим образом:
-$$
-r_i = (1 - \omega_a - \omega_s) v_i + \omega_a \pi_i + \omega_s \sigma_i
-$$
+\begin{equation}
+    \label{importance_rating}
+    r_i = (1 - \omega_a - \omega_s) v_i + \omega_a \pi_i + \omega_s \sigma_i
+\end{equation}
+
 
 Here $v_i$ is the stake volume index, $\pi_i$ is the finance activity index calculated with the NCDawareRank algorithm, $\sigma_i$ if the social network activity index, $\omega_a$ and $\omega_s$ is the weight coefficients. 
 
@@ -86,9 +88,10 @@ Activity Index is calculated according to the NCDawareRank algorithm using the f
 
 % Индекс активности в соответствии с алгоритмом NCDAwareRank вычисляется с помощью следующего рекуррентного соотношения:
 
-$$
-\boldsymbol{\pi}^{(i+1)} = ( \eta \boldsymbol{O} + \mu \boldsymbol{M} + ( 1 - \eta - \mu ) \boldsymbol{E} ) \boldsymbol{\pi}^{(i)}
-$$
+\begin{equation}
+    \label{recurrent_formula_for_ncdawarerank}
+    \boldsymbol{\pi}^{(i+1)} = ( \eta \boldsymbol{O} + \mu \boldsymbol{M} + ( 1 - \eta - \mu ) \boldsymbol{E} ) \boldsymbol{\pi}^{(i)}
+\end{equation}
 
 Here $\pi^{(i)}$ is a vector of account importance indexes values. The vector is normalized, i.e. the sum of its elements is 1. $\boldsymbol{O}$ is the outlink matrix, $\boldsymbol{M}$ is the interlevel proximity matrix. See the definitions of the matrices below. $\eta$ and $\mu$ are weight coefficients that determine contributions of the $\boldsymbol{O}$ and $\boldsymbol{M}$ matrices. Their sum must be less than 1. $\boldsymbol{E}$ is the teleportation matrix added to ensure the series is convergent. This is defined as follows:
 
@@ -253,7 +256,7 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 \subsection{Social network activity index}
 
-U{\degree}OS blockchain is integrated with social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index.
+U{\degree}OS blockchain is integrated with social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index, as defined in the formula \ref{importance_rating}.
 
 Every type of node has its own social network activity index. We denote as $\boldsymbol{\sigma_A}$ the vector of account indices and as $\boldsymbol{\sigma_C}$ the vector of content indices. Both vectors are normalized to 1:
 
@@ -262,6 +265,7 @@ $$
 $$
 
 There are many kinds of relations between nodes. Every kind of relation has several properties:
+
 
 \begin{enumerate}
     \item {Type of the source node (account or content)};
@@ -276,16 +280,21 @@ So, a relation can connect either nodes of the same type or nodes of different t
 
 There are following kinds of relations:
 
-\begin{enumerate}
-    \item { Ownership: bi-directional relation bounding an account and a content item;}
-    \item { Like: uni-directional relation from an account to a content item;}
-    \item { Dislike: uni-directional relation from an account to a content item;}
-    \item { Follow: uni-directional relation between two accounts; }
-    \item { Trust: uni-directional relation between two accounts. }
-    \item { Comment: uni-directional relation between two content items. }
-    \item { Membership: bi-directional relation between a company and an account. }
-\end{enumerate}
-
+\begin{tabular}{|l|c|c|c|}
+\hline
+ relation name & direction & source type & target type\\
+\hline
+ ownership & bi-directional & account & content \\
+ upvote & uni-directional & account & content \\
+ downvote & uni-directional & account & content \\
+ follow & uni-directional & account & account \\
+ trust & uni-directional & account & account \\
+ comment & uni-directional & content & content \\
+ membership & bi-directional & account & account \\
+\hline
+\end{tabular}
+\\ 
++
 \begin{figure}[h]
       \includegraphics[width=1\linewidth]{pictures/graph_example.eps}
       \caption{Social network graph example}
@@ -355,7 +364,7 @@ Following mitigations are used in the project, in order to reduce the risk of at
   \item Only incoming transfers contribute to importance index, it makes obtaining score from existing accounts more difficult.
   \item There are stake threshold for accounts, participating in importance index calculation, and amount threshold fot transfers. It makes attacks more expensive for attackers.
   \item Using NCDAwareRank instead of PageRank makes the system more resistant to splitting account attacks. This algorythm gives preference to accounts, tightly integrated to common network.
-  \item Koefficients $\omega_a$ and $\omega_a$ have relatively small values, it makes contribution of activity index and social index to total importance index significantly less than stake contribution.
+  \item Koefficients $\omega_a$ and $\omega_s$ have relatively small values, it makes contribution of activity index and social index to total importance index significantly less than stake contribution.
   \item Using decaying weights makes effect of any fraud activity temporary. Stopping fraud activity causes quick decreasing obtained score.
 \end{itemize}
 

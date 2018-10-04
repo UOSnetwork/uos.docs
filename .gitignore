@@ -1,0 +1,5 @@
+yellow_paper/pictures/*.pdf
+*.aux
+*.log
+*.out
+*.toc
