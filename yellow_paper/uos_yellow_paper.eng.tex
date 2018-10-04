@@ -244,6 +244,13 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 % Подмножество вершин, каждая из которых структурно соединена совсем остальными, называется кластером. Можно показать, что каждая вершина может принадлежать только одному кластеру. Также вершина может не принадлежать ни к одному из кластеров, в этом случае она называется значимым узлом, если среди соседей этой вершины есть такие, которые принадлежат к двум разным кластерам, и отдельно стоящей вершиной в противном случае.
 
+\begin{figure}[h]
+      \includegraphics[width=1\linewidth]{pictures/clustering_example.eps}
+      \caption{SCAN algorythm applying example. Parameters $\varepsilon=0.7$ and $\mu=4$ were used.}
+      \label{fig:sigmoida}
+\end{figure}
+
+
 \subsection{Social network activity index}
 
 U{\degree}OS blockchain is integrated with social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index.
