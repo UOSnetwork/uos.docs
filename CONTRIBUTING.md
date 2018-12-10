@@ -65,7 +65,7 @@ github/UOSnetwork/repo/issues
 
 Submit a UIP as a pull request to the UIP repository: github/UOSnetwork/repo/
 
-See [UIP Template](../../../uos.uip/master/uip_template.md).
+See [UIP Template](../../../uos.uip/blob/master/uip_template.md).
 
 Documentation <a name="docs"></a>
 ---------------------------------
