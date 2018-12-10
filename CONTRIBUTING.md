@@ -126,6 +126,6 @@ See [Releases and Release Notes](releases.md).
 Communication <a name="communication"></a>
 ------------------------------------------
 
-* Gitter: https://gitter.im/home/explore#createcommunity
+* Gitter: [UOS-Dev](https://gitter.im/UOS-Dev/)
 * Telegram: [UOS Network Chat](https://t.me/uos_network_en)
 * Discord: [UOS Network Chat](https://discord.gg/Bcq2Q5C)
