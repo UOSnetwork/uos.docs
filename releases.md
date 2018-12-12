@@ -4,6 +4,7 @@ U°OS Releases
 * [Atilla 1.1](#atilla1_1)
 * [Atilla 1.2](#atilla1_2)
 * [Atilla 1.3](#atilla1_3)
+* [Atilla 1.4](#atilla1_4)
 
 Attila 1.1 <a name="atilla1_1"></a>
 -----------------------------------
@@ -108,3 +109,34 @@ Added infrastructure for quick Importance algorithm research, testing and deploy
 * Fixed Governance not being available for mobile and other small screen devices
 * Fixed edited not being published in some cases
 * Fixed brainkey verification numbers not representing textboxes
+
+Attila 1.4 <a name="atilla1_4"></a>
+-----------------------------------
+
+**Date:** December 12, 2018
+
+### U°Community
+
+#### New Features
+
+**Account activity log:**
+
+* Added "emission"”" transaction type
+* Added a popup with raw transaction information
+
+**Publications categories:**
+
+* Added test categories: hot, trending, fresh
+* The "Publications"”" page now shows posts in a newsfeed format
+* Added a list of people and communities, authoring posts in a given category
+
+**Main page articles rotation:**
+
+* Top posts on the main page are now randomly taking the main spot
+
+#### Bug Fixes
+
+* Fixed duplicate entries in the user wallet activity log
+* Fixed notifications providing incorrect links to posts in communities
+* Fixed post sharing notification not displaying a post preview picture
+* Fixed main page top post author rating preview locking to 1000°
