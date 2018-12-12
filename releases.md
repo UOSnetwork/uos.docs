@@ -121,13 +121,13 @@ Attila 1.4 <a name="atilla1_4"></a>
 
 **Account activity log:**
 
-* Added "emission"”" transaction type
+* Added "emission" transaction type
 * Added a popup with raw transaction information
 
 **Publications categories:**
 
 * Added test categories: hot, trending, fresh
-* The "Publications"”" page now shows posts in a newsfeed format
+* The "Publications" page now shows posts in a newsfeed format
 * Added a list of people and communities, authoring posts in a given category
 
 **Main page articles rotation:**
