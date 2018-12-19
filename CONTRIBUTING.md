@@ -47,7 +47,7 @@ Project Repositories <a name="repos"></a>
 * [uos.docs](https://github.com/UOSnetwork/uos.docs) — U°OS Framework documentation repository
 * [uos.uip](https://github.com/UOSnetwork/uos.uip) — U°OS Network improvement proposals
 * [ucom.uip](https://github.com/UOSnetwork/ucom.uip) — U°Community improvement proposals
-* [mongo-c-driver](https://github.com/UOSnetwork/mongo-c-driver) — A cross-platform MongoDB client library for C
+* [mongo-c-driver](https://github.com/UOSnetwork/mongo-c-driver) — A cross-platform MongoDB client library for C. Used as part of the U°OS project to provide library compatibility to cache account names.
 * [uos.contracts](https://github.com/UOSnetwork/uos.contracts) — U°OS Network contracts for entity rates
 * [uos.libs](https://github.com/UOSnetwork/uos.libs) — DEPRECATED
 
