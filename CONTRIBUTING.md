@@ -34,6 +34,8 @@ Introduction <a name="introduction"></a>
 * Block Producer Node
 * Calculator Node
 
+U°Community is deployed as a dapp and has a fronted and a backend for interface.
+
 Project Repositories <a name="repos"></a>
 -----------------------------------------
 
