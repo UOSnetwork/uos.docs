@@ -15,6 +15,7 @@ Table of Contents
 * [Coding Conventions](#codestyle)
 * [Code of Conduct](#conduct)
 * [List of Releases](#releases)
+* [Spinning up a Node](#bpnode)
 * [Communication](#communication)
 
 Introduction <a name="introduction"></a>
@@ -133,6 +134,11 @@ List of Releases <a name="releases"></a>
 ----------------------------------------
 
 See [Releases and Release Notes](releases.md).
+
+Spinning up a Node <a name="bpnode"></a>
+----------------------------------------
+
+For a detailed walkthrough see [Spinning up a Block Producer Node on Ubuntu](uosBPubuntu.md).
 
 Communication <a name="communication"></a>
 ------------------------------------------
