@@ -55,8 +55,7 @@ Working with Issues <a name="issues"></a>
 
 ### Issue tracker
 
-* github/UOSnetwork/repo/issues
-* github/UOSnetwork/repo/issues
+Click ``Issues`` in the repository to see the reported issues.
 
 ### Submitting an Issue
 
@@ -71,9 +70,9 @@ A UIP is what you submit to improve the U°OS protocol. A UIP is always a commun
 
 ### UIP tracker
 
-github/UOSnetwork/repo/issues
+UIPs are tracked in the [uos.uip](https://github.com/UOSnetwork/uos.uip) repository.
 
-### Submitting an UIP
+### Submitting a UIP
 
 Submit a UIP as a pull request to the UIP repository: github/UOSnetwork/repo/
 
@@ -113,7 +112,7 @@ See [Commit Message Style Guide](commit_message.md).
 
 #### Fixing a bug
 
-1. Check the Issue Tracker first to see if the bug's been reported and/or fixed.
+1. Check the [Issue Tracker](#issues) first to see if the bug's been reported and/or fixed.
 2. If the bug hasn't been submitted yet, submit it first.
 3. Write a comment in the issue tracker that you are working on the bug.
 4. Submit your fix in accordance with the regular [GitHub flow](https://help.github.com/articles/github-flow/).
