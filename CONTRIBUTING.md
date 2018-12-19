@@ -36,7 +36,19 @@ Introduction <a name="introduction"></a>
 Project Repositories <a name="repos"></a>
 -----------------------------------------
 
-*Populate when done reorging.*
+* [ucom.frontend](https://github.com/UOSnetwork/ucom.frontend) — U°Community frontend
+* [singularity](https://github.com/UOSnetwork/singularity) — DPOI
+* [ucom.backend](https://github.com/UOSnetwork/ucom.backend) — U°Community backend
+* [ucom.libs.social.transactions](https://github.com/UOSnetwork/ucom.libs.social.transactions) — U°Community user transactions on U°OS
+* [ucom.libs.wallet](https://github.com/UOSnetwork/ucom.libs.wallet) — U°Community wallet for U°OS
+* [uos.plugins](https://github.com/UOSnetwork/uos.plugins) — Rate of entities on U°OS. Entities: posts, articles, comments, users, organizations, communities. Also displayed on U°Community.
+* [uos](https://github.com/UOSnetwork/uos) — U°OS blockchain software
+* [uos.docs](https://github.com/UOSnetwork/uos.docs) — U°OS Framework documentation repository
+* [uos.uip](https://github.com/UOSnetwork/uos.uip) — U°OS Network improvement proposals
+* [ucom.uip](https://github.com/UOSnetwork/ucom.uip) — U°Community improvement proposals
+* [mongo-c-driver](https://github.com/UOSnetwork/mongo-c-driver) — A cross-platform MongoDB client library for C
+* [uos.contracts](https://github.com/UOSnetwork/uos.contracts) — U°OS Network contracts for entity rates
+* [uos.libs](https://github.com/UOSnetwork/uos.libs) — DEPRECATED
 
 Working with Issues <a name="issues"></a>
 -----------------------------------------
