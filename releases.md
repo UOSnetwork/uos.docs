@@ -5,6 +5,7 @@ U°OS Releases
 * [Atilla 1.2](#atilla1_2)
 * [Atilla 1.3](#atilla1_3)
 * [Atilla 1.4](#atilla1_4)
+* [Atilla 1.5](#atilla1_5)
 
 Attila 1.1 <a name="atilla1_1"></a>
 -----------------------------------
@@ -140,3 +141,52 @@ Attila 1.4 <a name="atilla1_4"></a>
 * Fixed notifications providing incorrect links to posts in communities
 * Fixed post sharing notification not displaying a post preview picture
 * Fixed main page top post author rating preview locking to 1000°
+
+Attila 1.5 <a name="atilla1_5"></a>
+-----------------------------------
+
+**Date:** December 19, 2018
+
+### U°Community
+
+#### New Features
+
+**Publications editor update:**
+
+* Removed separate title, lead text, picture fields
+* First line is now used as Title
+* First picture is now used as Preview
+* Added draft autosave
+
+**Post social thumbnails:**
+
+* Post and publication links now have common thumbnails when pasted into social media 
+
+**Governance revamp:**
+
+* Added UOS network context to BP voting
+* Added Governance description
+* Added your stake display and edit feature to the Governance page
+* Added voting rules display on voting page
+* Added new voting pipeline
+
+**Other features:**
+
+* Added "show more" on "People" page
+* Added account name search and display when sending tokens
+* "Hot" tab on "Publications" page is now active by default for mobiles
+* Added user communities list on the main page
+
+#### Bug Fixes
+
+* Fixed empty posts in communities
+
+#### GitHub
+
+* Added backend docker configs for easy installation
+
+### U°OS
+
+**Importance voting:**
+
+* All accounts are now voting with their integral account Importance
