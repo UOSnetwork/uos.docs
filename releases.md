@@ -223,6 +223,6 @@ Attila 1.6 <a name="atilla1_6"></a>
 
 **Social Index Algorithm update:**
 
-* Communities’ start rate is now 0
+* Communities' start rate is now 0
 * Interactions are now calculated directly between accounts
 * Actions fade out faster
