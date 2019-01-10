@@ -6,6 +6,7 @@ U°OS Releases
 * [Atilla 1.3](#atilla1_3)
 * [Atilla 1.4](#atilla1_4)
 * [Atilla 1.5](#atilla1_5)
+* [Atilla 1.6](#atilla1_6)
 
 Attila 1.1 <a name="atilla1_1"></a>
 -----------------------------------
@@ -190,3 +191,38 @@ Attila 1.5 <a name="atilla1_5"></a>
 **Importance voting:**
 
 * All accounts are now voting with their integral account Importance
+
+Attila 1.6 <a name="atilla1_6"></a>
+-----------------------------------
+
+**Date:** December 29, 2018
+
+### U°Community
+
+#### New Features
+
+**Server-side rendering:**
+
+* Page pre-rendering on the server 
+* Faster page loading
+* Search engine-friendly content
+
+**Tagging system:**
+
+* Automatic tag parsing
+* Automatic tag links
+* Tag page
+* Tag rating system
+* Direct posts from tag page
+
+**Publication draft:**
+
+* Content you’ve entered is now autosaved until published
+
+### U°OS
+
+**Social Index Algorithm update:**
+
+* Communities' start rate is now 0
+* Interactions are now calculated directly between accounts
+* Actions fade out faster
