@@ -85,7 +85,7 @@ See [UIP Template](../../../uos.uip/blob/master/uip_template.md).
 Documentation <a name="docs"></a>
 ---------------------------------
 
-[U°OS and U°Community documentation hub[(https://uos.readme.io).
+[U°OS and U°Community documentation hub](https://uos.readme.io).
 
 Developer Environment <a name="environment"></a>
 ------------------------------------------------
