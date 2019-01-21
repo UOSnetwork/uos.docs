@@ -16,6 +16,7 @@ Table of Contents
 * [Code of Conduct](#conduct)
 * [List of Releases](#releases)
 * [Spinning up a Node](#bpnode)
+* [Licensing](#license)
 * [Communication](#communication)
 
 Introduction <a name="introduction"></a>
@@ -142,6 +143,10 @@ Spinning up a Node <a name="bpnode"></a>
 ----------------------------------------
 
 For a detailed walkthrough see [Spinning up a Block Producer Node on Ubuntu](uosBPubuntu.md).
+
+Licensing <a name="license"></a>
+--------------------------------
+Both U°OS and U°Community are open source and under public licensing. For details, check the LICENSE.md file in each repository.
 
 Communication <a name="communication"></a>
 ------------------------------------------
