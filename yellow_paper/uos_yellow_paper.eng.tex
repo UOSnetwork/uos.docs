@@ -258,102 +258,81 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 U{\degree}OS blockchain is integrated with social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index, as defined in the formula \ref{importance_rating}.
 
-Every type of node has its own social network activity index. We denote as $\boldsymbol{\sigma_A}$ the vector of account indices and as $\boldsymbol{\sigma_C}$ the vector of content indices. Both vectors are normalized to 1:
+Social index calculation is based on following data:
 
+The matrix $\boldsymbol{V}$ contains all information about upvotes:
 $$
-\sum_i{\sigma_{Ai}} = 1, \sum_i{\sigma_{Ci}} = 1
-$$
-
-There are many kinds of relations between nodes. Every kind of relation has several properties:
-
-
-\begin{enumerate}
-    \item {Type of the source node (account or content)};
-    \item {Type of the target node (account or content)};
-    \item {Direct weight};
-    \item {Reverse weight};
-    \item {Height (age of relation, measured in blocks)};
-    \item {Flag "decayable" that controls the dependence of weights on time}.
-\end{enumerate}
-
-So, a relation can connect either nodes of the same type or nodes of different types. A relation also can be uni-directional or bi-directional.
-
-There are following kinds of relations:
-
-\begin{tabular}{|l|c|c|c|}
-\hline
- relation name & direction & source type & target type\\
-\hline
- ownership & bi-directional & account & content \\
- upvote & uni-directional & account & content \\
- downvote & uni-directional & account & content \\
- follow & uni-directional & account & account \\
- trust & uni-directional & account & account \\
- comment & uni-directional & content & content \\
- membership & bi-directional & account & account \\
-\hline
-\end{tabular}
-\\ 
-+
-\begin{figure}[h]
-      \includegraphics[width=1\linewidth]{pictures/graph_example.eps}
-      \caption{Social network graph example}
-      \label{fig:sigmoida}
-\end{figure}
-
-
-Following recurrent equation is used for social network activity index calculation:
-$$
-    \boldsymbol{\sigma}^{(n+1)}_A = \mu (\boldsymbol{o}_{AA} \boldsymbol{\sigma}^{(n)}_A + \boldsymbol{o}_{AC} \boldsymbol{\sigma}^{(n)}_C) + (1-\mu) (\boldsymbol{T}_{AA} \boldsymbol{\sigma}^{(n)}_A + \boldsymbol{T}_{AC} \boldsymbol{\sigma}^{(n)}_C)
-$$
-$$
-    \boldsymbol{\sigma}^{(n+1)}_C = \mu (\boldsymbol{o}_{CA} \boldsymbol{\sigma}^{(n)}_A + \boldsymbol{o}_{CC} \boldsymbol{\sigma}^{(n)}_C) + (1-\mu) (\boldsymbol{T}_{CA} \boldsymbol{\sigma}^{(n)}_A + \boldsymbol{T}_{CC} \boldsymbol{\sigma}^{(n)}_C)
+V_{ik} = \begin{cases}
+ e^{(ln K)[h/H]}
+ & \text{if the account $k$ upvoted the content $i$ at the height $h$,}\\
+ 0 & \text{otherwise.}
+\end{cases}
 $$
 
-Where $\boldsymbol{o}_{XX}$ is outlink matrices, $\boldsymbol{T}_{XX}$ is teleportation matrices, $\mu$ is numeric koefficient.
-
-In order to construct outlink matrices, we shoud former constrruct weight matrices:
-
+The matrix $\boldsymbol{P}$ contains all information about content owners:
 $$
-    w_{XYij} = \sum_{k|(X,i) \to (Y,j)} \alpha_k W^R_k + \sum_{k|(Y,j) \to (X,i)} \alpha_k W^D_k
-$$
-where $W^D_k$ and $W^R_k$ are direct and reverse weights of kth relation. The summation is over all relations connecting a node i of type X and a node j of type Y for reverse weights (and vice versa for direct weights).
-
-$\alpha_k$ is decay multiplier for relation k. 
-
-$$
-\alpha_k = \begin{cases}
- \exp{(lnK [\frac{h_k}{D}])}
- & \text{if flag "decayable" is set}\\
- 1 & \text{otherwise}
-\end{cases} 
-$$
-where K and D are global parameters, and $h_k$ is height of the kth relation.
-
-Further, outlink matrices can be calculated, based on weight matrix. Weight matrix can contain negative elements, what contradicts the condition of algorytm convergence. So we provide all elements to be not negative.
-
-$$
-\hat{o}_{XYij} = w_{XYij} + b_{XYj}
+P_{ik} = \begin{cases}
+ 1
+ & \text{if the content $k$ belongs to the account $i$,}\\
+ 0 & \text{otherwise.}
+\end{cases}
 $$
 
-where $b_{XYj}$ is
+The matrix $\boldsymbol{R}$ contains all information about reposts:
+$$
+R_{ik} = \begin{cases}
+ 1 & \text{if the content $i$ is a repost of the account $k$,}\\
+ -1 & \text{if $i=k$ and the content $i$ is a repost,}\\
+ 0 & \text{otherwise.}
+\end{cases}
+$$
+
+Besides these matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a weight vector $\boldsymbol{w}$, containing priority values for every account. These vectors are normalized to 1:
 
 $$
-b_{XYj} = \begin{cases}
- |\min_k w_{XYkj}|
- & \text {if $\min_k w_{XYkj} < 0$,}\\
- 0 & \text{otherwise}
-\end{cases} 
+\sum_i{\sigma^a_i} = 1, \sum_i{\sigma^c_i} = 1
 $$
 
-Further, we normalize columns to 1:
+
+Based on these data structures, we may caclulate social activity vectors for accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$
+
+We may obtain now the matrix $\boldsymbol{V'}$:
 
 $$
-o_{XYij} = \begin{cases}
- \frac{\hat{o}_{XYij}} {\sum\limits_{k} \hat{o}_{XYkj}}
- & \text{if $\sum\limits_{k} \hat{o}_{XYkj}> 0$,}\\
- 0 & \text{otherwise}
-\end{cases} 
+\boldsymbol{V'} = ( \boldsymbol{I} + \boldsymbol{R} ) \boldsymbol{V}
+$$
+
+And the matrix $\boldsymbol{U}:$
+
+$$
+\hat{U_{ik}} = max_n(P_{in} V'_{nk})
+$$
+
+$$
+U_{ik} = \begin{cases}
+ \frac{\hat{U}_{ik}} {\sum_n{\hat{U}_{nk}}} & \text{if $\sum_n{\hat{U}_{nk}}>0$} \\
+ 0 & \text{otherwise.}
+\end{cases}
+$$
+
+We may now use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
+
+$$
+\boldsymbol{\sigma^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{\sigma^a}^{(n)}
+$$
+
+The teleportation matrix $\boldsymbol{T}$ contains information about initial weights of accounts:
+
+$$
+\boldsymbol{T} = (\beta \boldsymbol{e} + (1 - \beta) \boldsymbol{w}) \boldsymbol{e}^T
+$$
+
+Here $\beta$ is a koefficient $0 < \beta < 1$, $\boldsymbol{e}$ is unit vector.
+
+Based on $\boldsymbol{\sigma^a}$, we may obtain $\boldsymbol{\sigma^c}$:
+
+$$
+\boldsymbol{\sigma^c} = \boldsymbol{V'}\boldsymbol{\sigma^a}
 $$
 
 \subsection{Resistance to attacks}
