@@ -1,14 +1,16 @@
 U°OS Releases
 =============
 
-* [Atilla 1.1](#atilla1_1)
-* [Atilla 1.2](#atilla1_2)
-* [Atilla 1.3](#atilla1_3)
-* [Atilla 1.4](#atilla1_4)
-* [Atilla 1.5](#atilla1_5)
-* [Atilla 1.6](#atilla1_6)
+* [Attila 1.1](#attila1_1)
+* [Attila 1.2](#attila1_2)
+* [Attila 1.3](#attila1_3)
+* [Attila 1.4](#attila1_4)
+* [Attila 1.5](#attila1_5)
+* [Attila 1.6](#attila1_6)
+* [Attila 1.7](#attila1_7)
+* [Attila 1.8](#attila1_8)
 
-Attila 1.1 <a name="atilla1_1"></a>
+Attila 1.1 <a name="attila1_1"></a>
 -----------------------------------
 
 **Date:** November 20, 2018
@@ -36,7 +38,7 @@ Attila 1.1 <a name="atilla1_1"></a>
 * Fixed media-post picture size
 * Fixed media-post date being refreshed after upvote
 
-Attila 1.2 <a name="atilla1_2"></a>
+Attila 1.2 <a name="attila1_2"></a>
 -----------------------------------
 
 **Date:** November 27, 2018
@@ -73,7 +75,7 @@ Attila 1.2 <a name="atilla1_2"></a>
 * Fixed oldest content being shown first in user and community profiles
 * Fixed pagescroll for low resolutions
 
-Attila 1.3 <a name="atilla1_3"></a>
+Attila 1.3 <a name="attila1_3"></a>
 -----------------------------------
 
 **Date:** December 5, 2018
@@ -112,7 +114,7 @@ Added infrastructure for quick Importance algorithm research, testing and deploy
 * Fixed edited not being published in some cases
 * Fixed brainkey verification numbers not representing textboxes
 
-Attila 1.4 <a name="atilla1_4"></a>
+Attila 1.4 <a name="attila1_4"></a>
 -----------------------------------
 
 **Date:** December 12, 2018
@@ -143,7 +145,7 @@ Attila 1.4 <a name="atilla1_4"></a>
 * Fixed post sharing notification not displaying a post preview picture
 * Fixed main page top post author rating preview locking to 1000°
 
-Attila 1.5 <a name="atilla1_5"></a>
+Attila 1.5 <a name="attila1_5"></a>
 -----------------------------------
 
 **Date:** December 19, 2018
@@ -192,7 +194,7 @@ Attila 1.5 <a name="atilla1_5"></a>
 
 * All accounts are now voting with their integral account Importance
 
-Attila 1.6 <a name="atilla1_6"></a>
+Attila 1.6 <a name="attila1_6"></a>
 -----------------------------------
 
 **Date:** December 29, 2018
@@ -226,3 +228,50 @@ Attila 1.6 <a name="atilla1_6"></a>
 * Communities' start rate is now 0
 * Interactions are now calculated directly between accounts
 * Actions fade out faster
+
+Attila 1.7 <a name="attila1_7"></a>
+-----------------------------------
+
+**Date:** January 16, 2019
+
+### U°Community
+
+#### New Features
+
+**User search**
+
+* Added simple search to the people page: https://u.community/users
+* Added pagination to search results.
+* People can be looked up by account or displayed name.
+
+Attila 1.8 <a name="attila1_8"></a>
+-----------------------------------
+
+**Date:** January 23, 2019
+
+### U°Community
+
+#### New Features
+
+**Mention system:**
+
+* Added user search popup in any content editor, called by pressing `@`
+* Added notifications on user mentions
+* Added links to mentions
+
+**Publication preview settings:**
+
+* Added a popup with preview settings
+* Added a separate preview thumbnail upload feature
+* Added a dropdown menu with community picker
+
+**Account-based user profile links:**
+
+* Added new user profile page link format: https://u.community/users/
+* Added share button to publication page
+
+**Migrated backend source code to TypeScript**
+
+* Added ESlint
+
+**Added web-app monitoring service**
