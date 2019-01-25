@@ -287,14 +287,15 @@ R_{ik} = \begin{cases}
 \end{cases}
 $$
 
-Besides these matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a weight vector $\boldsymbol{w}$, containing priority values for every account. These vectors are normalized to 1:
+Besides these matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a weight vector $\boldsymbol{w}$, containing priority values for every account. 
+
+Based on these data structures, we may caclulate social activity vectors for accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$. These vectors are normalized to 1:
 
 $$
 \sum_i{\sigma^a_i} = 1, \sum_i{\sigma^c_i} = 1
 $$
 
 
-Based on these data structures, we may caclulate social activity vectors for accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$
 
 We may obtain now the matrix $\boldsymbol{V'}$:
 
@@ -305,7 +306,14 @@ $$
 And the matrix $\boldsymbol{U}:$
 
 $$
-\hat{U_{ik}} = max_n(P_{in} V'_{nk})
+\hat{U}_{ik} = max_n(P_{in} V'_{nk})
+$$
+
+To provide effective decaying weights with time, we add a special ``hidden'' account $h$, which accepts upvotes from every account:
+
+$$
+\forall i \ne h \hat{U}_{hi} = 1,
+\forall i\hat{U}_{ih} = 0
 $$
 
 $$
@@ -318,16 +326,33 @@ $$
 We may now use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
 
 $$
-\boldsymbol{\sigma^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{\sigma^a}^{(n)}
+\boldsymbol{\hat{\sigma}^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{ \hat{\sigma}^a}^{(n)}
 $$
 
 The teleportation matrix $\boldsymbol{T}$ contains information about initial weights of accounts:
 
 $$
-\boldsymbol{T} = (\beta \boldsymbol{e} + (1 - \beta) \boldsymbol{w}) \boldsymbol{e}^T
+\boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{w} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
 $$
 
-Here $\beta$ is a koefficient $0 < \beta < 1$, $\boldsymbol{e}$ is unit vector.
+Here $\beta$ and $\gamma$ are koefficients with values between 0 and 1, $\boldsymbol{e}$ is unit vector.
+
+Further, we should subtract contribution of stack from the rating vector, because social index of an account should not depend on this account's stack:
+
+$$
+\boldsymbol{\dot{\sigma}^a} = \frac{1}{1 - (1-\alpha) \gamma}(\boldsymbol{\hat{\sigma}^a} - (1 - \alpha) \gamma \boldsymbol{s})
+$$
+
+Finally, we must remove the from rating vector the ``hidden'' account. This operation changes norm of the rating vector, so we must normalize it to 1:
+
+$$
+\sigma^a_i = \frac{\dot{\sigma}^a_i}{\sum_{j \ne h} \dot{\sigma}^a_j}, i \ne h
+$$
+
+
+
+
+
 
 Based on $\boldsymbol{\sigma^a}$, we may obtain $\boldsymbol{\sigma^c}$:
 
