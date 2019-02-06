@@ -100,7 +100,7 @@ Stake volume index is based on the amount of tokens owned and allocated by the a
 Social and financial activity indices depend on the transactional activity of the account in the most recent time window period, determined by the U{\degree}OS protocol. These indices are calculated using NCDAwareRank algorithm, described in the details in the sections below. We will characterize the main principles of the algorithm, based on the calculation of the financial index $\pi_i$. Later in the separate section we will explain how the algorithm is used to calculate the social activity component $\sigma_i$.  NCDAwareRank gives more preference to the accounts that are tightly integrated in the general network, which helps to make the network resistant to the \emph{splitting account attacks}\footnote{See Appendix 1 Glossary for definition} performed by the botnets with a small number of accounts. Another important feature of the algorithm is the utilization of incoming activity only. This is a PageRank-based paradigm, that ensures a user can obtain the score only from the accounts that refer to it. Such a score is a direct representation of the user's utility for the entire network.
 
 Financial activity index $\pi_i$ is calculated only for the accounts with the stake balance exceeding the $A_0$ threshold. This value is determined by the network. When calculating the account financial activity index only transactions with the amount of tokens higher than $T_0$ are taken into account. That value is also determined by the network. Transactions that do not meet these thresholds are not included. Financial activity index depends on transactions, creation time of which lays in some pre-determined time interval. The duration of this interval is $W$ blocks. Contribution of every transaction decreases exponentially.
-\textcolor{red}{Comment for Lesha Prokopov: do we plan to use the same mechanism for the social activity index}
+%\textcolor{red}{Comment for Lesha Prokopov: do we plan to use the same mechanism for the social activity index}
 
 Noticeably, each network application based on U{\degree}OS framework can define their unique set of financial and social transactions that are included in the calculation of the corresponding financial and social index scores. These applications can be deployed as DApps (distributed applications) and may implement a wide range of economic and/or social systems, such as service platforms, knowledge networks, digital content copyright systems, libraries, public records, online markets etc. Unlike centralized versions of such services, U{\degree}OS DApps would preserve the important properties of blockchain systems, particularly, decentralization, record immutability, and transparency.
 
@@ -375,7 +375,7 @@ Change of the blockchain algorithm parameters and the block validation procedure
 
 
 
-\textcolor{red}{Comment: we might want to include here the details of implementation of the changes in the blockchain algorithm, achieved by the consensus on the \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}, and on the block production, achieved by consensus among validators.}
+%\textcolor{red}{Comment: we might want to include here the details of implementation of the changes in the blockchain algorithm, achieved by the consensus on the \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}, and on the block production, achieved by consensus among validators.}
 
 
 \subsection{Key features of the algorithm: resistance to attacks}
