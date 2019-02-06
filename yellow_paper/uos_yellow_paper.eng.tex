@@ -62,7 +62,7 @@ Computing resources needed for block hashing in the current blockchain framework
 
 The next iteration of PoS was introduced as the Delegated Proof-of-Stake (DPoS) \cite{dantheman}. Here network members are divided into two groups: members, who delegate the authority to create blocks and validate transactions, and validators (block producers). This partition provides better scalability and efficiency. Nevertheless, DPoS still has the problem of motivation for a participant to use their assets actively instead of accumulating them, which has a negative impact on the growth and induces network centralization. 
 
-Yet another consensus metric, the Proof-of-Importance consensus algorithm (PoI), was first introduced in the NEM cryptocurrency \cite{nem}. PoI incentivizes network participants' activity. The major departure from PoS is that block generation probability and reward distribution depends not only on the volume of a user's deposits, but also on the participant's activity rate and reputation. Thus, the algorithm motivates users to be more active by participating in more transactions and contributing to the network development. Despite all its merits, PoI has some shortcomings in efficiency. \textcolor{red}{[maybe good to have the citation here]}
+Yet another consensus metric, the Proof-of-Importance consensus algorithm (PoI), was first introduced in the NEM cryptocurrency \cite{nem}. PoI incentivizes network participants' activity. The major departure from PoS is that block generation probability and reward distribution depends not only on the volume of a user's deposits, but also on the participant's activity rate and reputation. Thus, the algorithm motivates users to be more active by participating in more transactions and contributing to the network development. Despite all its merits, PoI has some shortcomings in efficiency. 
 
 
 \subsection{Motivation}
@@ -142,7 +142,7 @@ $$
 w_{ij}=\sum_{k|j \to i, {h_k \ge H_0} \land {h_k \le H_0+W}} \theta ( a_k - T_0 ) \theta ( s_i - A_0 ) \theta ( s_j - A_0 ) a_k \exp{(lnK [\frac{h_k}{D}])}
 $$
 
-where $a_k$ is the token sum of transaction \textit{k}, $h_k$ is the $k$-th transaction depth, i.e. the block order number from the current point, also known as a block height,  $K$ and $D$ are transaction contribution decrease parameters, that define how much the contribution of each transaction decreases over time, $\theta$ is the standard Heaviside step function. The purpose of these parameters is that over every $D$ number of blocks, created after the given transaction, the transaction contribution decreases by $w'=Kw$. The sum is taken over all the transactions of a deposit from the account \textit{i} to the account \textit{j}, depth of which lays between $H_0$ and $H_0+W$. $H_0$ and $W$ are the parameters, which values are currently equal to $H_0=2419200$ and $W=1000$. In this setting only, the transactions from the time gap, duration of which is $W$ blocks, contribute to the financial activity index calculation. Thus, we obtain the coefficient of the incoming financial activity from the user $j$ to the user $i$ as follows:
+where $a_k$ is the token sum of transaction \textit{k}, $h_k$ is the $k$-th transaction depth, i.e. the block order number from the current point, also known as a block height,  $K$ and $D$ are transaction contribution decrease parameters, that define how much the contribution of each transaction decreases over time, $\theta$ is the standard Heaviside step function, and $[ \cdot ]$ is a standard floor function. According to the formula, transaction contribution decreases with the rate $K$ over every $D$ number of blocks, created after this given transaction. The sum is taken over all the transactions of a deposit from the account \textit{i} to the account \textit{j}, depth of which lays between $H_0$ and $H_0+W$. $H_0$ and $W$ are the parameters, which values are currently equal to $H_0=0$ and $W=17280000$ blocks. In this setting only, the transactions from the time gap, duration of which is $W$ blocks, contribute to the financial activity index calculation. Thus, we obtain the coefficient of the incoming financial activity from the user $j$ to the user $i$ as follows:
 
 
 
@@ -171,7 +171,7 @@ $$
 Outlink matrix $\boldsymbol{O}$ captures the structure of incoming financial transactions in the network graph.
 
 \paragraph{Interlevel proximity matrix calculation:}
-Let $S$ be the set of all the accounts used for the financial activity index calculation. $S$ is further divided into disjoint subsets $A_i$, called NCD (Nearly-Completely Departed) blocks. These blocks are obtained using the SCAN algorithm, described below. For the given account $u$, $G_u$ is the set of all the accounts, for which the according member of the outlink matrix $o_{uv}$ is greater than zero. Then the set $\chi_u$ of proximal accounts of $u$ is obtained as: 
+Let $\Omega$ be the set of all the accounts used for the financial activity index calculation. $\Omega$ is further divided into disjoint subsets $A_i$, called NCD (Nearly-Completely Departed) blocks. These blocks are obtained using the SCAN algorithm, described below. For the given account $u$, $G_u$ is the set of all the accounts, for which the according member of the outlink matrix $o_{vu}$ is greater than zero. Then the set $\chi_u$ of proximal accounts of $u$ is obtained as: 
 
 
 
@@ -236,7 +236,7 @@ Vertex $w$ is structurally reachable from vertex $v$ if
 
 
 $$
-REACH(v,w) \Leftrightarrow \exists v_1,...v_n \in V \forall i \in \{1,...n-1\}DirREACH(v_i,v_{i+1})
+REACH(v,w) \Leftrightarrow \exists v_1,...,v_n \in V \text{: } \forall i \in \{1,...n-1\} \text{: } DirREACH(v_i,v_{i+1})
 $$
 
 Vertex $v$ is structurally connected with vertex $w$ if
@@ -244,7 +244,7 @@ Vertex $v$ is structurally connected with vertex $w$ if
 
 
 $$
-CONNECT(v,w) \Leftrightarrow \exists u \in V REACH(u,v) \vee REACH(u,w)
+CONNECT(v,w) \Leftrightarrow \exists u \in V\text{: } REACH(u,v) \vee REACH(u,w)
 $$
 
 A cluster is a subset of vertices structurally connected to each other. It is possible to show that every vertex can only belong to one cluster. A vertex can also belong to no cluster; in this case it can either be a hub if there are vertices belonging to two different clusters in its environment, otherwise it is an independent vertex.
@@ -258,23 +258,20 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 
 \subsubsection{Social activity score calculation}
-\textcolor{red}{Comment: this section is rapidly changing. Lesha will be committing more stuff here this week.}
 
-U{\degree}OS blockchain is integrated with the social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index, as defined in the formula \ref{importance_rating}.
-
-Social index calculation is based on following data:
+U{\degree}OS blockchain can interact with a variety of DApps to register social transactions in the network. Network accounts form the nodes of the graph with its directed edges representing social interactions between the users. Every account obtains the rate depending on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance index, defined by the formula \ref{importance_rating}. Social index calculation is based on the following data:
 	
-	The matrix $\boldsymbol{V}$ contains all information about upvotes:
+	The matrix $\boldsymbol{V}$ contains the information about the upvotes:
 	
 	$$	
 	V_{ik} = \begin{cases}
-	 e^{(ln K)[h/H]}
-	 & \text{if the account $k$ upvoted the content $i$ at the height $h$,}\\
+	 e^{[h_\alpha/D]ln K}
+	 & \text{if the account $k$ upvoted the content $i$ at the height $h_\alpha$,}\\
 	 0 & \text{otherwise.}
 	\end{cases}
 	$$
 	
-	The matrix $\boldsymbol{P}$ contains all information about content owners:
+	The matrix $\boldsymbol{P}$ contains the information about the content owners:
 	$$
 	P_{ik} = \begin{cases}
 	 1
@@ -283,7 +280,7 @@ Social index calculation is based on following data:
 	\end{cases}
 	$$
 	
-	The matrix $\boldsymbol{R}$ contains all information about reposts:
+	The matrix $\boldsymbol{R}$ contains the information about the reposts:
 	$$
 	R_{ik} = \begin{cases}
 	 1 & \text{if the content $i$ is a repost of the account $k$,}\\
@@ -293,43 +290,64 @@ Social index calculation is based on following data:
 	$$
 	
 	
-	Besides these matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a weight vector $\boldsymbol{w}$, containing priority values for every account. These vectors are normalized to 1:
+	Besides these matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a weight vector $\boldsymbol{w}$, containing the priority values for every account. 
+	
+	Based on these data structures, we may caclulate social activity vectors for the accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$. These vectors are normalized to 1:
 	
 	$$
 	\sum_i{\sigma^a_i} = 1, \sum_i{\sigma^c_i} = 1
 	$$
 	
-	Based on these data structures, we may caclulate social activity vectors for accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$
+	
 	
 	We may obtain now the matrix $\boldsymbol{V'}$:
-	
+	$$
+\boldsymbol{V'} = ( \boldsymbol{I} + \boldsymbol{R} ) \boldsymbol{V}
+$$
 	%$$
 	And the matrix $\boldsymbol{U}:$
-	
 	$$
-	\hat{U_{ik}} = max_n(P_{in} V'_{nk})
-	$$
-	
-	$$
-	U_{ik} = \begin{cases}
-	 \frac{\hat{U}_{ik}} {\sum_n{\hat{U}_{nk}}} & \text{if $\sum_n{\hat{U}_{nk}}>0$} \\
-	 0 & \text{otherwise.}
-	\end{cases}
+	\hat{U}_{ik} = max_n(P_{in} V'_{nk})
 	$$
 	
+	To provide effective decaying weights with time, we add a special   hidden account $h$, which accepts upvotes from every account:
+	
+	$$
+	\forall i \ne h \text{: } \hat{U}_{hi} = 1,
+	\forall i  \text{: } \hat{U}_{ih} = 0
+	$$
+	$$
+U_{ik} = \begin{cases}
+ \frac{\hat{U}_{ik}} {\sum_n{\hat{U}_{nk}}} & \text{if $\sum_n{\hat{U}_{nk}}>0$} \\
+ 0 & \text{otherwise.}
+\end{cases}
+$$
 	We may now use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
 	
 	$$
-	\boldsymbol{\sigma^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{\sigma^a}^{(n)}
+	\boldsymbol{\hat{\sigma}^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{ \hat{\sigma}^a}^{(n)}
 	$$
 	
-	The teleportation matrix $\boldsymbol{T}$ contains information about initial weights of accounts:
+	The teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts:
 	
 	$$
-	\boldsymbol{T} = (\beta \boldsymbol{e} + (1 - \beta) \boldsymbol{w}) \boldsymbol{e}^T
+	\boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{w} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
 	$$
 	
-	Here $\beta$ is a coefficient $0 < \beta < 1$, $\boldsymbol{e}$ is unit vector.
+	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is unit vector.
+	
+	Further, we should subtract the contribution of stack from the rating vector, because social index of an account should not depend on this account's stack:
+	
+	$$
+	\boldsymbol{\dot{\sigma}^a} = \frac{1}{1 - (1-\alpha) \gamma}(\boldsymbol{\hat{\sigma}^a} - (1 - \alpha) \gamma \boldsymbol{s})
+	$$
+	
+	Finally, we must remove the from rating vector the ``hidden'' account. This operation changes norm of the rating vector, so we must normalize it to 1:
+	
+	$$
+	\sigma^a_i = \frac{\dot{\sigma}^a_i}{\sum_{j \ne h} \dot{\sigma}^a_j}, i \ne h
+	$$
+	
 	
 	Based on $\boldsymbol{\sigma^a}$, we may obtain $\boldsymbol{\sigma^c}$:
 	
@@ -343,21 +361,21 @@ Social index calculation is based on following data:
 
 Importance index $r_i$ in the framework is used for two major purposes:
 \begin{itemize}
+\item  network governance through voting for validators (block producers), \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition} and change of the algorithm parameters
 \item emission calculation for each user \textit{i}
-\item  network governance through voting for validators (block producers) and \emph{calculating nodes}\footnote{See Appendix 1 Glossary for definition}
 \end{itemize}
 
  %user rankings is not a part of the algorithm
 
 First, it defines the amount of new tokens received by the account in case when the emission is positive.  See section 3 for details.
 
-Second, importance index defines the relative weight of the account during the voting for producers and for the \emph{calculating nodes}\footnote{See Appendix 1 Glossary for definition}. A single user can offer their candidacy for both groups. Voting allows the delegation of certain powers within the system to a limited number of the validation accounts. Producers, that own nodes which produce and verify blocks, as well as the \emph{calculating node}\footnote{See Appendix 1 Glossary for definition} owners, are selected by voting by other members of the network. Candidates nominate themselves for a desired position and voting can be performed by other users at any time. Changes are recorded within a short period, according to the protocol routine.
+Second, importance index defines the relative weight of the account during the voting for producers and for the \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}. A single user can offer their candidacy for both groups. Voting allows the delegation of certain powers within the system to a limited number of the validation accounts. Producers, that own nodes which produce and verify blocks, as well as the \emph{calculator node}\footnote{See Appendix 1 Glossary for definition} owners, are selected by voting by other members of the network. Candidates nominate themselves for a desired position and voting can be performed by other users at any time. Changes are recorded within a short period, according to the protocol routine.
 
-Change of the blockchain algorithm parameters and the block validation procedure is performed using voting as well. Here users delegate these decisions to the \emph{calculating nodes}\footnote{See Appendix 1 Glossary for definition}.
+Change of the blockchain algorithm parameters and the block validation procedure is performed using voting as well. Here users delegate these decisions to the \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}.
 
 
 
-\textcolor{red}{Comment: we might want to include here the details of implementation of the changes in the blockchain algorithm, achieved by the consensus on the \emph{calculating nodes}\footnote{See Appendix 1 Glossary for definition}, and on the block production, achieved by consensus among validators.}
+\textcolor{red}{Comment: we might want to include here the details of implementation of the changes in the blockchain algorithm, achieved by the consensus on the \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}, and on the block production, achieved by consensus among validators.}
 
 
 \subsection{Key features of the algorithm: resistance to attacks}
@@ -380,10 +398,10 @@ Following mitigations are used in the project in order to reduce the risk of att
 U{\degree}OS tokens constitute the core of our crypto-economy. They are used in the system in several ways:
 
 \begin{itemize}
-\item to allocate CPU and bandwidth resources via smart contracts, using staked token amounts. Only core U{\degree}OS tokens can be used for CPU and bandwidth resource allocation.
-\item to purchase other resources, such as RAM, and perform other forms of financial transfers via smart contracts using unstaked tokens. Potentially, many types of tokens can be used for this activities.
-\item to vote for block producers and \emph{calculating nodes}\footnote{See Appendix 1 Glossary for definition}. The amount of staked tokens, owned by the account, contributes to the user's weight during the voting process.
-\item to receive dynamic emission and to increase the importance score. Amount of tokens staked by the account directly influences the amount of dynamic emission and importance received by the user.
+\item to allocate CPU and bandwidth resources, using staked token amounts. Only core U{\degree}OS tokens can be used for CPU and bandwidth resource allocation.
+\item to purchase other resources, such as RAM, and perform other forms of financial transfers via smart contracts using unstaked tokens. Potentially, many types of tokens can be used for these activities.
+\item to vote for block producers and \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}. The amount of staked tokens, owned by the account, contributes to the user's importance during the voting process.
+\item to increase the importance score and receive the dynamic emission. Amount of tokens staked by the account directly influences the importance received by the user and the amount of dynamic emission.
 \end{itemize}
 
 Thus, staked core tokens are used for the resource allocation and play an important part in emission and importance calculation, while unstaked tokens can be used in direct transfers. 
@@ -462,7 +480,7 @@ $$
     E(t_n) = \lambda S(t_{n-1}) f \Big( \kappa \frac {E_T(t_n) - E_S(t_{n-1})}{\lambda S(t_{n-1})} \Big)
 $$
 
-Here $\lambda$ is the marginal growth of the token amount in the system S \textcolor{red}{Comment: we need to change the notation here, S is used elsewhere} per one emission. It is defined through $L$, which specifies the marginal growth $S$ in a year, expressed as a percentage:
+Here $\lambda$ is the marginal growth of the token amount in the system S per one emission. It is defined through $L$, which specifies the marginal growth $S$ in a year, expressed as a percentage:
 
 
 
@@ -502,7 +520,7 @@ Dynamic emission allocated to a user for their social and financial activities m
 %Network governances encompasses several major activities:
 %
 %\begin{itemize}
-%\item choice of block producers and importance calculating nodes 
+%\item choice of block producers and importance calculator nodes 
 %\item change of blockchain algorithm parameters and block validation procedure
 %\item \textcolor{red}{Comment: anything else?}
 %
@@ -510,7 +528,21 @@ Dynamic emission allocated to a user for their social and financial activities m
 %Above mentioned network governance activities are performed by the network in a collective manner through voting procedures. Importance score of each user represents the weight of their vote.
 
 \section{U{\degree}OS framework architecture}
-\textcolor{red}{Here we describe the system's architecture. I'm working with Petya Kotegov and Jenya Konstantinov to complete this section. We want to create an easy-to-understand high level architecture using schematic and textual instruments, and create references to the lower-level system descritions on the github. My plan is to have this part finished by 5th of February, and incorporate the feedback with improvements by the 9th.}
+In this section we outline the general architecture of the U{\degree}OS blockchain.\footnote{Detailed documentation is located at the U{\degree}OS GitHub and at the EOS.io website: include hyperlink here}We have several types of nodes in the system, connected via the peer-to-peer protocol, namely, \emph{api}, \emph{block producer}, \emph{calculator}, and \emph{seed} nodes. Nodes that have a connection between each other are called \emph{peer} nodes. Nodes can be accessed by the owner alone or by any user via \emph{private} or \emph{public} APIs, respectively. Every node, irregardless of their type, performs the following activities:
+\begin{itemize}
+\item[•] synchronizes and distributes pending transactions into new blocks and new blocks between the peer nodes via peer-to-peer connection
+\item[•] communicates with the other programs and receives the information about the state of the blockchain (accounts, token sums, list of block producers, voting results, smart contracts, data tables, transaction blocks, and others) via private and public APIs
+\end{itemize}
+
+The node types are briefly defined as follows:
+\begin{itemize}
+\item \emph{Block producer node} -- owned by the block producer, issues blocks according to the schedule and distributes them among the peer nodes
+\item \emph{Calculator node} -- calculates user importance scores, based on social and financial transactions from irreversible blocks, and saves the results to the blockchain
+\item \emph{Seed node} -- a node, that has a public peer-to-peer connection, it is used by the new network participants, when they join the network
+\item \emph{API node --} a node with a public API
+%\item \emph{MongoDB node --}
+%\item IPFS nodes
+\end{itemize}
 
 
 \addcontentsline{toc}{section}{Appendix 1 Glossary}
@@ -528,7 +560,7 @@ The importance index of an account is calculated as a function of Stake Volume I
 
 An entity represented by a tuple of pairs of keys (public + private), which is registered in a blockchain by an individual.
 
-\textbf{Producer}
+\textbf{Block Producers}
 
 Accounts with the right to verify blocks. They must have a node.
 
@@ -536,9 +568,13 @@ Accounts with the right to verify blocks. They must have a node.
 
 A P2P network node, which performs all the calculations in blockchain. A node belonging to a producer account (producer node), produces blocks.
 
+\textbf{Calculator node} 
+
+A node that performs importance score calculation and distributes calculated scores back to the network
+
 \textbf{Splitting account attack} 
 
-
+An attack performed by a network of many accounts. The goal of the attacker is to receive a maximal total importance rate while utilizing minimal resources
 \addcontentsline{toc}{section}{References}
 \begin{thebibliography}{99}
  \bibitem{Metcalfe} Metcalfe, B. (2013). Metcalfe's law after 40 years of ethernet. Computer, 46(12), 26-31. URL: http://ieeexplore.ieee.org/abstract/document/6636305/
