@@ -9,6 +9,7 @@ U°OS Releases
 * [Attila 1.6](#attila1_6)
 * [Attila 1.7](#attila1_7)
 * [Attila 1.8](#attila1_8)
+* [Attila 1.9](#attila1_9)
 
 Attila 1.1 <a name="attila1_1"></a>
 -----------------------------------
@@ -275,3 +276,10 @@ Attila 1.8 <a name="attila1_8"></a>
 * Added ESlint
 
 **Added web-app monitoring service**
+
+Attila 1.9 <a name="attila1_9"></a>
+-----------------------------------
+
+**Date:** February 6, 2019
+
+[Check U°Community Release Notes in the respective repository.](https://github.com/UOSnetwork/ucom.frontend/releases/tag/v1.9.0)
