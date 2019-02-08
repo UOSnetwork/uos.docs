@@ -243,85 +243,12 @@ Vertex $v$ is structurally connected with vertex $w$ if
 
 
 
-<<<<<<< HEAD
-\subsection{Social network activity index}
-
-U{\degree}OS blockchain is integrated with social network. Every account may have social relations with any other account and may have some content belonging to it. Accounts and content objects with relations between them form a graph. Every account and content object obtains rate depending on involving into social relations. We denote this rate as social network activity index. It is contrubute to importance index, as defined in the formula \ref{importance_rating}.
-
-Social index calculation is based on following data:
-
-The matrix $\boldsymbol{V}$ contains all information about upvotes:
-$$
-V_{ik} = \begin{cases}
- e^{(ln K)[h/H]}
- & \text{if the account $k$ upvoted the content $i$ at the height $h$,}\\
- 0 & \text{otherwise.}
-\end{cases}
-$$
-
-The matrix $\boldsymbol{P}$ contains all information about content owners:
-$$
-P_{ik} = \begin{cases}
- 1
- & \text{if the content $k$ belongs to the account $i$,}\\
- 0 & \text{otherwise.}
-\end{cases}
-$$
-
-The matrix $\boldsymbol{R}$ contains all information about reposts:
-$$
-R_{ik} = \begin{cases}
- 1 & \text{if the content $i$ is a repost of the account $k$,}\\
- -1 & \text{if $i=k$ and the content $i$ is a repost,}\\
- 0 & \text{otherwise.}
-\end{cases}
-$$
-
-Besides these matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a weight vector $\boldsymbol{w}$, containing priority values for every account. 
-
-Based on these data structures, we may caclulate social activity vectors for accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$. These vectors are normalized to 1:
-
-$$
-\sum_i{\sigma^a_i} = 1, \sum_i{\sigma^c_i} = 1
-$$
-
-
-
-We may obtain now the matrix $\boldsymbol{V'}$:
-
-$$
-\boldsymbol{V'} = ( \boldsymbol{I} + \boldsymbol{R} ) \boldsymbol{V}
-$$
-
-And the matrix $\boldsymbol{U}:$
-
-$$
-\hat{U}_{ik} = max_n(P_{in} V'_{nk})
-$$
-
-To provide effective decaying weights with time, we add a special ``hidden'' account $h$, which accepts upvotes from every account:
-
-$$
-\forall i \ne h \hat{U}_{hi} = 1,
-\forall i\hat{U}_{ih} = 0
-$$
-
-$$
-U_{ik} = \begin{cases}
- \frac{\hat{U}_{ik}} {\sum_n{\hat{U}_{nk}}} & \text{if $\sum_n{\hat{U}_{nk}}>0$} \\
- 0 & \text{otherwise.}
-\end{cases}
-$$
-
-We may now use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
-=======
 $$
 CONNECT(v,w) \Leftrightarrow \exists u \in V\text{: } REACH(u,v) \vee REACH(u,w)
 $$
 
 A cluster is a subset of vertices structurally connected to each other. It is possible to show that every vertex can only belong to one cluster. A vertex can also belong to no cluster; in this case it can either be a hub if there are vertices belonging to two different clusters in its environment, otherwise it is an independent vertex.
 
->>>>>>> origin/yellow.paper
 
 %\begin{figure}[h]
  %     \includegraphics[width=1\linewidth]{pictures/clustering_example.eps}
@@ -395,41 +322,6 @@ U_{ik} = \begin{cases}
  0 & \text{otherwise.}
 \end{cases}
 $$
-<<<<<<< HEAD
-\boldsymbol{\hat{\sigma}^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{ \hat{\sigma}^a}^{(n)}
-$$
-
-The teleportation matrix $\boldsymbol{T}$ contains information about initial weights of accounts:
-
-$$
-\boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{w} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
-$$
-
-Here $\beta$ and $\gamma$ are koefficients with values between 0 and 1, $\boldsymbol{e}$ is unit vector.
-
-Further, we should subtract contribution of stack from the rating vector, because social index of an account should not depend on this account's stack:
-
-$$
-\boldsymbol{\dot{\sigma}^a} = \frac{1}{1 - (1-\alpha) \gamma}(\boldsymbol{\hat{\sigma}^a} - (1 - \alpha) \gamma \boldsymbol{s})
-$$
-
-Finally, we must remove the from rating vector the ``hidden'' account. This operation changes norm of the rating vector, so we must normalize it to 1:
-
-$$
-\sigma^a_i = \frac{\dot{\sigma}^a_i}{\sum_{j \ne h} \dot{\sigma}^a_j}, i \ne h
-$$
-
-
-
-
-
-
-Based on $\boldsymbol{\sigma^a}$, we may obtain $\boldsymbol{\sigma^c}$:
-
-$$
-\boldsymbol{\sigma^c} = \boldsymbol{V'}\boldsymbol{\sigma^a}
-$$
-=======
 	We may now use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
 	
 	$$
@@ -485,7 +377,6 @@ Change of the blockchain algorithm parameters and the block validation procedure
 
 %\textcolor{red}{Comment: we might want to include here the details of implementation of the changes in the blockchain algorithm, achieved by the consensus on the \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}, and on the block production, achieved by consensus among validators.}
 
->>>>>>> origin/yellow.paper
 
 \subsection{Key features of the algorithm: resistance to attacks}
 
