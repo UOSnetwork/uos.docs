@@ -69,7 +69,7 @@ Since we are running this node in Singapore, we are issuing the following comman
 sudo timedatectl set-timezone Asia/Singapore
 ```
 
-### 3. Clone the UOS repository
+### 3. Clone the U°OS repository
 
 Create a working directory for the U°OS software:
 
@@ -83,7 +83,7 @@ Change the directory to `/uosdata/`:
 cd uosdata
 ```
 
-Clone the UOS repository:
+Clone the U°OS repository:
 
 ```
 git clone https://github.com/UOSnetwork/uos
@@ -97,7 +97,7 @@ Update the submodules:
 git submodule update --init --recursive
 ```
 
-### 5. Build the UOS software
+### 5. Build the U°OS software
 
 Build the U°OS software with the following command:
 
@@ -109,7 +109,7 @@ Note that this will run for over an hour, so plan accordingly.
 
 ### 6. Install the node
 
-Install the node from the UOS software:
+Install the node from the U°OS software:
 
 ```
 sudo ./eosio_install.sh
@@ -159,7 +159,7 @@ The account name has the following conventions:
 
 For example, `123example345` meets the convention requirements.
 
-Prepare the information that you will need to provide to the UOS developers:
+Prepare the information that you will need to provide to the U°OS developers:
 
 * Your preferred account name
 * Your Owner public key
@@ -206,7 +206,7 @@ Note that the default `config.ini` file has the `agent-name = "EOS Test Agent"` 
 
 ### 10. Download genesis.json
 
-Download the pre-created `genesis.json` file from the UOS repository to your `~/uosdata/uos/data/` directory:
+Download the pre-created `genesis.json` file from the U°OS repository to your `~/uosdata/uos/data/` directory:
 
 ```
 wget https://raw.githubusercontent.com/UOSnetwork/uos.docs/master/testnetv1/genesis.json
