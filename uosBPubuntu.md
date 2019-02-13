@@ -10,12 +10,12 @@
 
 ## Introduction <a name="introduction"></a>
 
-This document will guide you through spinning up a Block Producer Node on the UOS testnet.
+This document will guide you through spinning up a Block Producer Node on the U°OS testnet.
 
 As this is a testnet, here's a couple of things you need to know beforehand:
 
-* The UOS developers are currently registering Block Producers manually. You will need to contact the UOS developers on Telegram with your preferred account name and public keys.
-* Your account name generated when signing up at [https://u.community/](https://u.community/) won't work for the UOS Block Producer registration. You will need to come up with a different one and provide it to us.
+* The U°OS developers are currently registering Block Producers manually. You will need to contact the U°OS developers on Telegram with your preferred account name and public keys.
+* Your account name generated when signing up at [https://u.community/](https://u.community/) won't work for the U°OS Block Producer registration. You will need to come up with a different one and provide it to us.
 
 For this guide, we are using a fresh Ubuntu 16.04 (xenial) running in Singapore.
 
@@ -36,12 +36,12 @@ RAM:
 
 1. Install Boost C++ libraries
 2. Time sync the system
-3. Clone the UOS repository
+3. Clone the U°OS repository
 4. Update submodules
-5. Build the UOS software. Note that this will run for over an hour, so plan accordingly.
-6. Install the node from the UOS software
-7. Generate three key pairs using the UOS software
-8. Contact the UOS developers with your preferred account name and public keys
+5. Build the U°OS software. Note that this will run for over an hour, so plan accordingly.
+6. Install the node from the U°OS software
+7. Generate three key pairs using the U°OS software
+8. Contact the U°OS developers with your preferred account name and public keys
 9. Create and modify `config.ini`
 10. Download a pre-created `genesis.json` file
 11. Start your node
@@ -71,7 +71,7 @@ sudo timedatectl set-timezone Asia/Singapore
 
 ### 3. Clone the UOS repository
 
-Create a working directory for the UOS software:
+Create a working directory for the U°OS software:
 
 ```
 mkdir uosdata
@@ -99,7 +99,7 @@ git submodule update --init --recursive
 
 ### 5. Build the UOS software
 
-Build the UOS software with the following command:
+Build the U°OS software with the following command:
 
 ```
 ./eosio_build.sh -s UOS
@@ -147,7 +147,7 @@ Label each key pair as **Owner**, **Active**, **Producer**. Labeling here just m
 
 **Keep the keys safe. You may want to encrypt them and store securely.**
 
-### 8. Contact the UOS developers
+### 8. Contact the U°OS developers
 
 Think up an account name that you would like to register as a Block Producer.
 
@@ -165,11 +165,11 @@ Prepare the information that you will need to provide to the UOS developers:
 * Your Owner public key
 * Your Active public key
 
-Contact the UOS general group in Telegram at [https://t.me/uos_network_en](https://t.me/uos_network_en).
+Contact the U°OS general group in Telegram at [https://t.me/uos_network_en](https://t.me/uos_network_en).
 
-PM the group Admin for the UOS Block Producers Telegram group.
+PM the group Admin for the U°OS Block Producers Telegram group.
 
-Once you join the UOS Block Producers Telegram group, provide your account name, owner and active public keys. The developers will register you as a Standby Block Producer.
+Once you join the U°OS Block Producers Telegram group, provide your account name, owner and active public keys. The developers will register you as a Standby Block Producer.
 
 ### 9. Create and modify config.ini
 
