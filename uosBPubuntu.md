@@ -196,7 +196,7 @@ Once you join the U°OS Block Producers Telegram group, provide your account nam
 
     where
 
-    * PRODUCER_NAME — Your account name that you provided to the UOS developers earlier
+    * PRODUCER_NAME — Your account name that you provided to the U°OS developers earlier
     * PUBLIC_KEY — Your public key from the Producer key pair that you generated earlier
     * PRIVATE_KEY — Your private key from the Producer key pair that you generated earlier
 
