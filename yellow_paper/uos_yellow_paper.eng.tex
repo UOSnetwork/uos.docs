@@ -330,11 +330,12 @@ $$
 	
 	The teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts:
 	
-	$$
-	\boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{w} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
-	$$
+	\begin{equation}
+	    \label{teleportation_matrix_definition}
+        \boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{v} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
+	\end{equation}
 	
-	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is unit vector.
+	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is unit vector, $\boldsymbol{s}$ is the stack vector, and $\boldsymbol{v}$ is the validity vector.
 	
 	Further, we should subtract the contribution of stack from the rating vector, because social index of an account should not depend on this account's stack:
 	
@@ -355,7 +356,27 @@ $$
 	\boldsymbol{\sigma^c} = \boldsymbol{V'}\boldsymbol{\sigma^a}
 	$$
 	
+	It remains to describe validity vector $\boldsymbol{v}$, being used in the formula (\ref{teleportation_matrix_definition}). It is invented in order to additional  botnet attack protection. It is calculated with PageRank algorithm.
 	
+	$$
+	\boldsymbol{\hat{v}}^{n+1} = (\alpha O_T+(1-\alpha)T_T) \boldsymbol{\hat{v}}^{n}
+	$$
+	
+	Here $O_T$ is outlink matrix, based on \textit{trust} relations, $T_T$ is teleportation matrix:
+	
+	$$
+        \boldsymbol{T_T} = ((1 - \lambda) \boldsymbol{e} + \lambda \boldsymbol{s}) \boldsymbol{e}^T
+	$$
+	
+	$$
+	\dot{v}_i = \theta({\hat{v}_i}-1/N)
+	$$
+	
+	Here $\theta$ is the Heaviside step function.
+	
+	$$
+	v_i = \frac{\dot{v}_i}{\sum_k{\dot{v}_k}}
+	$$
 	
 \subsection{Importance score usage: network governance and emission}
 
