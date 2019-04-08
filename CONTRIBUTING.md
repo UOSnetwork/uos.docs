@@ -15,7 +15,8 @@ Table of Contents
 * [Coding Conventions](#codestyle)
 * [Code of Conduct](#conduct)
 * [List of Releases](#releases)
-* [Spinning up a Node](#bpnode)
+* [Running up a Block Producer Node](#bpnode)
+* [Running a Calculator Node](#calcnode)
 * [Licensing](#license)
 * [Communication](#communication)
 
@@ -53,6 +54,10 @@ Project Repositories <a name="repos"></a>
 * [mongo-c-driver](https://github.com/UOSnetwork/mongo-c-driver) — A cross-platform MongoDB client library for C. Used as part of the U°OS project to provide library compatibility to cache account names.
 * [uos.contracts](https://github.com/UOSnetwork/uos.contracts) — U°OS Network contracts for entity rates
 * [tribute](https://github.com/UOSnetwork/tribute) — User mentions for U°Community
+* [ucom.libs.graphql-schemas](https://github.com/UOSnetwork/ucom.libs.graphql-schemas) — GraphQL schemas library to reuse between different services
+* [UOSTracker](https://github.com/UOSnetwork/UOSTracker) — U°OS block explorer
+* [UOS-Web-Wallet](https://github.com/UOSnetwork/UOS-Web-Wallet) — U°OS web wallet
+* [uos.landing](https://github.com/UOSnetwork/uos.landing) — U°OS landing page at https://uos.network/
 * [uos.libs](https://github.com/UOSnetwork/uos.libs) — DEPRECATED
 
 Working with Issues <a name="issues"></a>
@@ -139,10 +144,15 @@ List of Releases <a name="releases"></a>
 
 See [Releases and Release Notes](releases.md).
 
-Spinning up a Node <a name="bpnode"></a>
-----------------------------------------
+Running a Block Producer Node <a name="bpnode"></a>
+---------------------------------------------------
 
 For a detailed walkthrough see [Spinning up a Block Producer Node on Ubuntu](uosBPubuntu.md).
+
+Running a Calculator Node <a name="bpnode"></a>
+-----------------------------------------------
+
+For a detailed walkthrough see [Starting a U°OS Calculator Node](https://u.community/posts/5658).
 
 Licensing <a name="license"></a>
 --------------------------------
