@@ -1,3 +1,5 @@
+Deprecation warning: For release notes after February 6, 2019, refer to the release notes in specific repos. For example, [ucom.frontend/releases](https://github.com/UOSnetwork/ucom.frontend/releases).
+
 U°OS Releases
 =============
 
