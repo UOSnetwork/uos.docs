@@ -91,8 +91,13 @@ git clone https://github.com/UOSnetwork/uos
 
 ### 4. Update the submodules
 
-Update the submodules:
+Change the directory to `/uos/`:
 
+```
+cd uos
+```
+
+Update the submodules:
 ```
 git submodule update --init --recursive
 ```
@@ -102,7 +107,7 @@ git submodule update --init --recursive
 Build the U°OS software with the following command:
 
 ```
-./eosio_build.sh -s UOS
+scripts/eosio_build.sh -s UOS
 ```
 
 Note that this will run for over an hour, so plan accordingly.
@@ -112,7 +117,7 @@ Note that this will run for over an hour, so plan accordingly.
 Install the node from the U°OS software:
 
 ```
-sudo ./eosio_install.sh
+sudo scripts/eosio_install.sh
 ```
 
 Verify the version of the node:
@@ -176,7 +181,7 @@ Once you join the U°OS Block Producers Telegram group, provide your account nam
 1. Start the node once to create a default `config.ini` file:
 
     ```
-    nodeos --data-dir ~/uosdata/uos/data/ --config-dir ~/uosdata/uos/data
+    ~/opt/eosio/bin/nodeos --data-dir ~/uosdata/uos/data/ --config-dir ~/uosdata/uos/data
     ```
 
     The ```config.ini``` file will be created in the ```~/uosdata/uos/data/``` directory.
@@ -217,7 +222,7 @@ wget https://raw.githubusercontent.com/UOSnetwork/uos.docs/master/testnetv1/gene
 Start your Standby Block Producer node:
 
 ```
-nodeos --data-dir ~/uosdata/uos/data/ --genesis-json ~/uosdata/uos/data/genesis.json --config-dir ~/uosdata/uos/data "$@" > ~/uosdata/uos/data/stdout.txt 2> ~/uosdata/uos/data/stderr.txt &
+~/opt/eosio/bin/nodeos --data-dir ~/uosdata/uos/data/ --genesis-json ~/uosdata/uos/data/genesis.json --config-dir ~/uosdata/uos/data "$@" > ~/uosdata/uos/data/stdout.txt 2> ~/uosdata/uos/data/stderr.txt &
 ```
 
 Check that the node is running:
@@ -344,7 +349,7 @@ pkill nodeos
 Deleting all blocks to restart the node fresh:
 
 ```
-nodeos --data-dir ~/uosdata/uos/data/ --delete-all-blocks --config-dir ~/uosdata/uos/data "$@" > ~/uosdata/uos/data/stdout.txt 2> ~/uosdata/uos/data/stderr.txt &
+~/opt/eosio/bin/nodeos --data-dir ~/uosdata/uos/data/ --delete-all-blocks --config-dir ~/uosdata/uos/data "$@" > ~/uosdata/uos/data/stdout.txt 2> ~/uosdata/uos/data/stderr.txt &
 ```
 
 You might want to do this if you started your node prematurely without properly following the instructions.
