@@ -158,7 +158,7 @@ Think up an account name that you would like to register as a Block Producer.
 
 The account name has the following conventions:
 
-* Must start with a letter or digit
+* Must start with a letter or a digit
 * Must be 12 characters
 * Can only contain the characters lowercase a-z and 1-5
 
