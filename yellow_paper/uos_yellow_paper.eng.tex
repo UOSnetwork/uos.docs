@@ -259,9 +259,9 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 \subsubsection{Social activity score calculation}
 
-U{\degree}OS blockchain can interact with a variety of DApps to register social transactions in the network. Network accounts form the nodes of the graph with its directed edges representing social interactions between the users. Every account obtains the rate depending on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance index, defined by the formula \ref{importance_rating}. Social index calculation is based on the following data:
-	
-	The matrix $\boldsymbol{V}$ contains the information about the upvotes:
+U{\degree}OS blockchain can interact with a variety of DApps to register social transactions in the network. Network accounts form the nodes of the graph with its directed edges representing social interactions between the users. Every account obtains the rate depending on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance index, defined by the formula \ref{importance_rating}.          
+
+Social index calculation is based on several pieces of data. First, the matrix $\boldsymbol{V}$ contains the information about the upvotes:
 	
 	$$	
 	V_{ik} = \begin{cases}
@@ -271,7 +271,7 @@ U{\degree}OS blockchain can interact with a variety of DApps to register social 
 	\end{cases}
 	$$
 	
-	The matrix $\boldsymbol{P}$ contains the information about the content owners:
+	Second, the matrix $\boldsymbol{P}$ contains the information about the content owners:
 	$$
 	P_{ik} = \begin{cases}
 	 1
@@ -280,7 +280,7 @@ U{\degree}OS blockchain can interact with a variety of DApps to register social 
 	\end{cases}
 	$$
 	
-	The matrix $\boldsymbol{R}$ contains the information about the reposts:
+	Third, the matrix $\boldsymbol{R}$ contains the information about the reposts:
 	$$
 	R_{ik} = \begin{cases}
 	 1 & \text{if the content $i$ is a repost of the account $k$,}\\
@@ -289,28 +289,17 @@ U{\degree}OS blockchain can interact with a variety of DApps to register social 
 	\end{cases}
 	$$
 	
-	
-	Besides these matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a weight vector $\boldsymbol{w}$, containing the priority values for every account. 
-	
-	Based on these data structures, we may caclulate social activity vectors for the accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$. These vectors are normalized to 1:
-	
-	$$
-	\sum_i{\sigma^a_i} = 1, \sum_i{\sigma^c_i} = 1
-	$$
-	
-	
-	
-	We may obtain now the matrix $\boldsymbol{V'}$:
+	Given these matrices, we may obtain now the matrix $\boldsymbol{V'}$:
 	$$
 \boldsymbol{V'} = ( \boldsymbol{I} + \boldsymbol{R} ) \boldsymbol{V}
 $$
 	%$$
-	And the matrix $\boldsymbol{U}:$
+	And the matrix $\boldsymbol{U}$, that we get through the intermediate matrix $\boldsymbol{\hat{U}}$:
 	$$
 	\hat{U}_{ik} = max_n(P_{in} V'_{nk})
 	$$
-	
-	To provide effective decaying weights with time, we add a special   hidden account $h$, which accepts upvotes from every account:
+	As denoted by the matrix $\boldsymbol{V}$, weights of the individual transactions decay with time. Some accounts, however, might not have any incoming activity for a period of time, which results in the columns of zeros in the matrix $V$.  Such condition violates matrix stochasticity, that is necessary for the algorithm convergence. There are several ways to resolve this. First solution is is to fill the zero columns with equal values, while second option is to add a value of 1 to the diagonal elements of the matrix. These solutions have serious drawbacks though. In a former case, we would diffuse the account rates, such that the difference between the rates of active and inactive account will be unsigniificant. In a later case, the own activity of the account would result in the rate decrease for the user, that is against their own interests. 
+	To provide effective decaying weights and preserve the matrix stochasticity, we add a special hidden account $h$, which accepts upvotes from every account. For this account:
 	
 	$$
 	\forall i \ne h \text{: } \hat{U}_{hi} = 1,
@@ -322,20 +311,33 @@ U_{ik} = \begin{cases}
  0 & \text{otherwise.}
 \end{cases}
 $$
-	We may now use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
+
+	Unlike above mentioned solutions, our solution does not have these drawbacks and also has several advantages. First advantage is that we can now measure the activity of the network with regards to a fixed standard. We can monitor what proportion of the overall network rate is received by the hidden account, which indicates the rate of activity in the network — the higher is the rate of this account the lower is the network activity. Second, now we have a standard, relative to which we can decay our weights. Therefore, we do not lose any information about the decaying weights.
+	
+	
+	Besides above mentioned matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a validity trust weight vector $\boldsymbol{v}$, containing the priority values for every account. Normally, PageRank starts the calculation from the vector of equal weights, but in our algorithm, we modify this vector to include the system of trusts in our calculation. This is our innovation, that helps further protect the network from the botnets.
+	
+	Based on these data structures, we may calculate social activity vectors for the accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$. These vectors are normalized to 1:
+	
+	$$
+	\sum_i{\sigma^a_i} = 1, \sum_i{\sigma^c_i} = 1
+	$$
+		
+	
+	We use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
 	
 	$$
 	\boldsymbol{\hat{\sigma}^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{ \hat{\sigma}^a}^{(n)}
 	$$
 	
-	The teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts:
+	where the teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts:
 	
 	\begin{equation}
 	    \label{teleportation_matrix_definition}
         \boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{v} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
 	\end{equation}
 	
-	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is unit vector, $\boldsymbol{s}$ is the stack vector, and $\boldsymbol{v}$ is the validity vector.
+	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is а unit vector, $\boldsymbol{s}$ is the stack vector, and $\boldsymbol{v}$ is the validity vector.
 	
 	Further, we should subtract the contribution of stack from the rating vector, because social index of an account should not depend on this account's stack:
 	
@@ -343,7 +345,7 @@ $$
 	\boldsymbol{\dot{\sigma}^a} = \frac{1}{1 - (1-\alpha) \gamma}(\boldsymbol{\hat{\sigma}^a} - (1 - \alpha) \gamma \boldsymbol{s})
 	$$
 	
-	Finally, we must remove the from rating vector the ``hidden'' account. This operation changes norm of the rating vector, so we must normalize it to 1:
+	Finally, we must remove the rating vector of the "hidden'' account. This operation changes norm of the rating vector, so we must normalize it to 1:
 	
 	$$
 	\sigma^a_i = \frac{\dot{\sigma}^a_i}{\sum_{j \ne h} \dot{\sigma}^a_j}, i \ne h
@@ -356,13 +358,13 @@ $$
 	\boldsymbol{\sigma^c} = \boldsymbol{V'}\boldsymbol{\sigma^a}
 	$$
 	
-	It remains to describe validity vector $\boldsymbol{v}$, being used in the formula (\ref{teleportation_matrix_definition}). It is invented in order to additional  botnet attack protection. It is calculated with PageRank algorithm.
+	It remains to describe the validity vector $\boldsymbol{v}$, being used here in the formula (\ref{teleportation_matrix_definition}). As mentioned before, it is invented in order to implement additional botnet attack protection and is calculated using the PageRank algorithm.
 	
 	$$
 	\boldsymbol{\hat{v}}^{n+1} = (\alpha O_T+(1-\alpha)T_T) \boldsymbol{\hat{v}}^{n}
 	$$
 	
-	Here $O_T$ is outlink matrix, based on \textit{trust} relations, $T_T$ is teleportation matrix:
+	Here $O_T$ is outlink matrix, based on \textit{trust} relations, $T_T$ is the teleportation matrix:
 	
 	$$
         \boldsymbol{T_T} = ((1 - \lambda) \boldsymbol{e} + \lambda \boldsymbol{s}) \boldsymbol{e}^T
@@ -549,7 +551,7 @@ Dynamic emission allocated to a user for their social and financial activities m
 %Above mentioned network governance activities are performed by the network in a collective manner through voting procedures. Importance score of each user represents the weight of their vote.
 
 \section{U{\degree}OS framework architecture}
-In this section we outline the general architecture of the U{\degree}OS blockchain.\footnote{Detailed documentation is located at the U{\degree}OS GitHub and at the EOS.io website: include hyperlink here}We have several types of nodes in the system, connected via the peer-to-peer protocol, namely, \emph{api}, \emph{block producer}, \emph{calculator}, and \emph{seed} nodes. Nodes that have a connection between each other are called \emph{peer} nodes. Nodes can be accessed by the owner alone or by any user via \emph{private} or \emph{public} APIs, respectively. Every node, irregardless of their type, performs the following activities:
+In this section we outline the general architecture of the U{\degree}OS blockchain.\footnote{Detailed documentation is located at the U{\degree}OS GitHub and at the EOS.io website: https://developers.eos.io}We have several types of nodes in the system, connected via the peer-to-peer protocol, namely, \emph{api}, \emph{block producer}, \emph{calculator}, and \emph{seed} nodes. Nodes that have a connection between each other are called \emph{peer} nodes. Nodes can be accessed by the owner alone or by any user via \emph{private} or \emph{public} APIs, respectively. Every node, irregardless of their type, performs the following activities:
 \begin{itemize}
 \item[•] synchronizes and distributes pending transactions into new blocks and new blocks between the peer nodes via peer-to-peer connection
 \item[•] communicates with the other programs and receives the information about the state of the blockchain (accounts, token sums, list of block producers, voting results, smart contracts, data tables, transaction blocks, and others) via private and public APIs
