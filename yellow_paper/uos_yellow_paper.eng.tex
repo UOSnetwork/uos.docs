@@ -117,11 +117,11 @@ The vector of financial indices $\boldsymbol{\pi^{(j)}}$, where $j$ is the indic
 	    \boldsymbol{\pi}^{(j+1)} = ( \alpha \boldsymbol{O} + \beta \boldsymbol{M} + ( 1 - \alpha - \beta ) \boldsymbol{E} ) \boldsymbol{\pi}^{(j)}
 	\end{equation}
 
-Here $\boldsymbol{\pi^{(j)}}$ is a vector of account importance index values. The vector is normalized, i.e. the sum of its elements is 1. $\boldsymbol{O}$ is the outlink matrix, $\boldsymbol{M}$ is the interlevel proximity matrix. See the definitions of the matrices below. Coefficients $\alpha$ and $\beta$ are the weights that determine contributions of the matrices $\boldsymbol{O}$ and $\boldsymbol{M}$. Their sum must be less than 1. $\boldsymbol{E}$ is the teleportation matrix, added to ensure that the series is convergent. This matrix is defined as follows:
+Here $\boldsymbol{\pi^{(j)}}$ is a vector of the financial activity score index values. The vector is standardized, i.e. the sum of its elements is 1. $\boldsymbol{O}$ is the outlink matrix, $\boldsymbol{M}$ is the interlevel proximity matrix. See the definitions of the matrices below. Coefficients $\alpha$ and $\beta$ are the weights that determine contributions of the matrices $\boldsymbol{O}$ and $\boldsymbol{M}$. Their sum must be less than 1. $\boldsymbol{E}$ is the teleportation matrix, added to ensure that the series is convergent. This matrix is defined as follows:
 $$
-\boldsymbol{E}=\frac{1}{N}\boldsymbol{e}
+\boldsymbol{E}=\frac{1}{N}\boldsymbol{\hat{E}}
 $$
-where \textit{N} is the number of the accounts and $\boldsymbol{e}$ is the matrix in which all the elements are equal to 1, the calculation continues until for some $j$ the following condition is fulfilled: 
+where \textit{N} is the number of the accounts and $\boldsymbol{\hat{E}}$ is the matrix in which all the elements are equal to 1, the calculation continues until for some $j$ the following condition is fulfilled: 
 
 
 
@@ -144,12 +144,6 @@ $$
 
 where $a_k$ is the token sum of transaction \textit{k}, $h_k$ is the $k$-th transaction depth, i.e. the block order number from the current point, also known as a block height,  $K$ and $D$ are transaction contribution decrease parameters, that define how much the contribution of each transaction decreases over time, $\theta$ is the standard Heaviside step function, and $[ \cdot ]$ is a standard floor function. According to the formula, transaction contribution decreases with the rate $K$ over every $D$ number of blocks, created after this given transaction. The sum is taken over all the transactions of a deposit from the account \textit{i} to the account \textit{j}, depth of which lays between $H_0$ and $H_0+W$. $H_0$ and $W$ are the parameters, which values are currently equal to $H_0=0$ and $W=17280000$ blocks. In this setting only, the transactions from the time gap, duration of which is $W$ blocks, contribute to the financial activity index calculation. Thus, we obtain the coefficient of the incoming financial activity from the user $j$ to the user $i$ as follows:
 
-
-
-
-
-
-
 $$
 \hat{o}_{ij} = \begin{cases}
  w_{ji}-w_{ij}
@@ -158,7 +152,7 @@ $$
 \end{cases}
 $$
 
-After that the matrix, that was obtained,  is normalized so that the sum of elements in every column is equal to 1.
+After that the matrix, that was obtained, is standardized so that the sum of the elements in every column is equal to 1.
 
 
 $$
@@ -259,9 +253,9 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 \subsubsection{Social activity score calculation}
 
-U{\degree}OS blockchain can interact with a variety of DApps to register social transactions in the network. Network accounts form the nodes of the graph with its directed edges representing social interactions between the users. Every account obtains the rate depending on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance index, defined by the formula \ref{importance_rating}.          
+U{\degree}OS blockchain interacts with a variety of DApps and registers a defined set of social transactions in the network. Each account issues outgoing activity and receives input from other users. Together these connections form a graph with directed edges between the account nodes. Social rates, obtained by the accounts, depend on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance rate, defined by the formula (\ref{importance_rating}).  
 
-Social index calculation is based on several pieces of data. First, the matrix $\boldsymbol{V}$ contains the information about the upvotes:
+Social index calculation is based on several pieces of data. First, we define the matrix $\boldsymbol{V}$, that contains the information about the upvote transactions, with elements:
 	
 	$$	
 	V_{ik} = \begin{cases}
@@ -270,6 +264,8 @@ Social index calculation is based on several pieces of data. First, the matrix $
 	 0 & \text{otherwise.}
 	\end{cases}
 	$$
+	
+	where $h_\alpha$ is the $\alpha$-th transactional height within the window with a fixed length $W$, i.e. the block height from the current time point.
 	
 	Second, the matrix $\boldsymbol{P}$ contains the information about the content owners:
 	$$
@@ -289,22 +285,28 @@ Social index calculation is based on several pieces of data. First, the matrix $
 	\end{cases}
 	$$
 	
-	Given these matrices, we may obtain now the matrix $\boldsymbol{V'}$:
+	Given these matrices, we attain the matrix $\boldsymbol{V'}$:
 	$$
 \boldsymbol{V'} = ( \boldsymbol{I} + \boldsymbol{R} ) \boldsymbol{V}
 $$
 	%$$
-	And the matrix $\boldsymbol{U}$, that we get through the intermediate matrix $\boldsymbol{\hat{U}}$:
+	
+	and the intermediate matrix $\boldsymbol{\hat{U}}$, with elements:
 	$$
 	\hat{U}_{ik} = max_n(P_{in} V'_{nk})
 	$$
-	As denoted by the matrix $\boldsymbol{V}$, weights of the individual transactions decay with time. Some accounts, however, might not have any incoming activity for a period of time, which results in the columns of zeros in the matrix $V$.  Such condition violates matrix stochasticity, that is necessary for the algorithm convergence. There are several ways to resolve this. First solution is is to fill the zero columns with equal values, while second option is to add a value of 1 to the diagonal elements of the matrix. These solutions have serious drawbacks though. In a former case, we would diffuse the account rates, such that the difference between the rates of active and inactive account will be unsigniificant. In a later case, the own activity of the account would result in the rate decrease for the user, that is against their own interests. 
-	To provide effective decaying weights and preserve the matrix stochasticity, we add a special hidden account $h$, which accepts upvotes from every account. For this account:
+	As it is characterized by the matrix $\boldsymbol{V}$, weights of the individual transactions $V_{ik}$ decay with time. Some accounts, however, might not have any incoming activity for a period of time, longer than the window $W$. This results in the columns with zero elements in the matrix $\boldsymbol{V}$. Such condition violates the matrix stochasticity, that is necessary for the convergence of the iterative PageRank procedure. 
+	
+	There are several ways to resolve the issue. First solution is to fill the empty columns with equal values, while second option is to add a value of $1$'s to the diagonal elements of the matrix. Nevertheless, these solutions have notable drawbacks. In a former case, we would diffuse the account rates, such that the difference between the rates of active and inactive accounts becomes insignificant. In a later case, own activity of the account would result in the user rate decrease, contrary to their interest.
+	
+	In order to provide effective decaying weights and preserve the matrix stochasticity, we add a special hidden account $h$, which accepts upvotes from every account. For this account:
 	
 	$$
 	\forall i \ne h \text{: } \hat{U}_{hi} = 1,
 	\forall i  \text{: } \hat{U}_{ih} = 0
 	$$
+	
+	And after standardization:
 	$$
 U_{ik} = \begin{cases}
  \frac{\hat{U}_{ik}} {\sum_n{\hat{U}_{nk}}} & \text{if $\sum_n{\hat{U}_{nk}}>0$} \\
@@ -312,74 +314,77 @@ U_{ik} = \begin{cases}
 \end{cases}
 $$
 
-	Unlike above mentioned solutions, our solution does not have these drawbacks and also has several advantages. First advantage is that we can now measure the activity of the network with regards to a fixed standard. We can monitor what proportion of the overall network rate is received by the hidden account, which indicates the rate of activity in the network — the higher is the rate of this account the lower is the network activity. Second, now we have a standard, relative to which we can decay our weights. Therefore, we do not lose any information about the decaying weights.
+	Unlike solutions, outlined previously, our answer does not have the mentioned drawbacks. Conversely, it presents several advantages. First of them is that we can now measure the activity of the network with regards to a fixed standard. We can monitor what proportion of the overall network rate is received by the hidden account, which indicates the rate of activity in the network — the higher is the rate of this account, the lower is the network activity. Second, now we have a standard, relative to which we can observe the weights decay. Since transactions towards the hidden account happen regularly, the relative balance between the social index scores of the hidden account and other nodes demonstrates the level of score decay.
 	
+	Besides above mentioned matrices, calculations of social index scores are based on the stack vector $\boldsymbol{s}$ and a validity weight vector $\boldsymbol{v}$, containing the validity values for every account. These values originate from the trust relationships on the network, and are described in details in the section 2.1.3 below.
 	
-	Besides above mentioned matrices, calculations are based on the stack vector $\boldsymbol{s}$ and a validity trust weight vector $\boldsymbol{v}$, containing the priority values for every account. Normally, PageRank starts the calculation from the vector of equal weights, but in our algorithm, we modify this vector to include the system of trusts in our calculation. This is our innovation, that helps further protect the network from the botnets.
-	
-	Based on these data structures, we may calculate social activity vectors for the accounts $\boldsymbol{\sigma^a}$ and content $\boldsymbol{\sigma^c}$. These vectors are normalized to 1:
+	Based on these data structures, we can calculate social activity vectors for the accounts $\boldsymbol{\sigma^a}$ and for the content $\boldsymbol{\sigma^c}$. These vectors are standardized to 1:
 	
 	$$
 	\sum_i{\sigma^a_i} = 1, \sum_i{\sigma^c_i} = 1
 	$$
 		
 	
-	We use the PageRank algorithm to calculate $\boldsymbol{\sigma^a}$:
+	We calculate the values $\boldsymbol{\sigma^a}$ with a modified PageRank routine:
 	
-	$$
+	\begin{equation}
+	\label{social_score_pgrank}
 	\boldsymbol{\hat{\sigma}^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{ \hat{\sigma}^a}^{(n)}
-	$$
+	\end{equation}
 	
-	where the teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts:
+	where the teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts
 	
 	\begin{equation}
 	    \label{teleportation_matrix_definition}
         \boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{v} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
 	\end{equation}
 	
-	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is а unit vector, $\boldsymbol{s}$ is the stack vector, and $\boldsymbol{v}$ is the validity vector.
+	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is а unit vector, $\boldsymbol{s}$ is the stack vector, and $\boldsymbol{v}$ is the validity vector. Utilization of a validity vector serves as the modification of a classical PageRank algorithm.
 	
-	Further, we should subtract the contribution of stack from the rating vector, because social index of an account should not depend on this account's stack:
+	We should subtract the contribution of a stack from the rating vector, because social index of an account should not depend on its own stack:
 	
 	$$
 	\boldsymbol{\dot{\sigma}^a} = \frac{1}{1 - (1-\alpha) \gamma}(\boldsymbol{\hat{\sigma}^a} - (1 - \alpha) \gamma \boldsymbol{s})
 	$$
 	
-	Finally, we must remove the rating vector of the "hidden'' account. This operation changes norm of the rating vector, so we must normalize it to 1:
+	Finally, we must remove the rating vector of the hidden account. This operation changes norm of the rating vector, so we must standardize it to 1:
 	
 	$$
 	\sigma^a_i = \frac{\dot{\sigma}^a_i}{\sum_{j \ne h} \dot{\sigma}^a_j}, i \ne h
 	$$
 	
 	
-	Based on $\boldsymbol{\sigma^a}$, we may obtain $\boldsymbol{\sigma^c}$:
+	Based on $\boldsymbol{\sigma^a}$, we obtain values in $\boldsymbol{\sigma^c}$:
 	
 	$$
 	\boldsymbol{\sigma^c} = \boldsymbol{V'}\boldsymbol{\sigma^a}
 	$$
 	
-	It remains to describe the validity vector $\boldsymbol{v}$, being used here in the formula (\ref{teleportation_matrix_definition}). As mentioned before, it is invented in order to implement additional botnet attack protection and is calculated using the PageRank algorithm.
+\subsubsection{Validity trust network}
+
+	Normally, PageRank starts the calculation with the vector of equaly distributed weights, but in our algorithm for social index rate calculation, we modify this vector to integrate the system of trusts in our calculations. This is our innovation, that helps further protect the network from the botnets. Trusts are assigned by the members of the network to other members in a manual fashion and serve as a validation of their accounts. The user transmits trust proportionally to their stack amount. Such a condition ensures that a high level of trust is provided only by the meaningful users in the network. The higher is the level of overall trust that account obtains the higher is potentially the social index rate, they might receive.
 	
-	$$
+The validity vector $\boldsymbol{v}$ is used in the formula (\ref{teleportation_matrix_definition}). As mentioned before, it is invented in order to implement additional botnet attack protection and is calculated using the PageRank algorithm.
+	
+	\begin{equation}
+	\label{trust_pagerank}
 	\boldsymbol{\hat{v}}^{n+1} = (\alpha O_T+(1-\alpha)T_T) \boldsymbol{\hat{v}}^{n}
-	$$
+	\end{equation}
 	
-	Here $O_T$ is outlink matrix, based on \textit{trust} relations, $T_T$ is the teleportation matrix:
+	Here $O_T$ is outlink matrix, that is based on the \textit{trust} relations, $T_T$ is the teleportation matrix:
 	
 	$$
         \boldsymbol{T_T} = ((1 - \lambda) \boldsymbol{e} + \lambda \boldsymbol{s}) \boldsymbol{e}^T
 	$$
-	
+	Validity trust scores, obtained with the PageRank algorithm in (\ref{trust_pagerank}), are turned into binary values, using the Heaviside step function $\theta$:
 	$$
 	\dot{v}_i = \theta({\hat{v}_i}-1/N)
 	$$
-	
-	Here $\theta$ is the Heaviside step function.
-	
+and standardized towards a sum of $1$:
 	$$
 	v_i = \frac{\dot{v}_i}{\sum_k{\dot{v}_k}}
 	$$
-	
+	These scores are later used in (\ref{social_score_pgrank}).
 \subsection{Importance score usage: network governance and emission}
 
 Importance index $r_i$ in the framework is used for two major purposes:
