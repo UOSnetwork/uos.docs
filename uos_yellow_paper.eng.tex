@@ -117,11 +117,11 @@ The vector of financial indices $\boldsymbol{\pi^{(j)}}$, where $j$ is the indic
 	    \boldsymbol{\pi}^{(j+1)} = ( \alpha \boldsymbol{O} + \beta \boldsymbol{M} + ( 1 - \alpha - \beta ) \boldsymbol{E} ) \boldsymbol{\pi}^{(j)}
 	\end{equation}
 
-Here $\boldsymbol{\pi^{(j)}}$ is a vector of account importance index values. The vector is normalized, i.e. the sum of its elements is 1. $\boldsymbol{O}$ is the outlink matrix, $\boldsymbol{M}$ is the interlevel proximity matrix. See the definitions of the matrices below. Coefficients $\alpha$ and $\beta$ are the weights that determine contributions of the matrices $\boldsymbol{O}$ and $\boldsymbol{M}$. Their sum must be less than 1. $\boldsymbol{E}$ is the teleportation matrix, added to ensure that the series is convergent. This matrix is defined as follows:
+Here $\boldsymbol{\pi^{(j)}}$ is a vector of the financial activity score index values. The vector is standardized, i.e. the sum of its elements is 1. $\boldsymbol{O}$ is the outlink matrix, $\boldsymbol{M}$ is the interlevel proximity matrix. See the definitions of the matrices below. Coefficients $\alpha$ and $\beta$ are the weights that determine contributions of the matrices $\boldsymbol{O}$ and $\boldsymbol{M}$. Their sum must be less than 1. $\boldsymbol{E}$ is the teleportation matrix, added to ensure that the series is convergent. This matrix is defined as follows:
 $$
-\boldsymbol{E}=\frac{1}{N}\boldsymbol{e}
+\boldsymbol{E}=\frac{1}{N}\boldsymbol{\hat{E}}
 $$
-where \textit{N} is the number of the accounts and $\boldsymbol{e}$ is the matrix in which all the elements are equal to 1, the calculation continues until for some $j$ the following condition is fulfilled: 
+where \textit{N} is the number of the accounts and $\boldsymbol{\hat{E}}$ is the matrix in which all the elements are equal to 1, the calculation continues until for some $j$ the following condition is fulfilled: 
 
 
 
@@ -144,12 +144,6 @@ $$
 
 where $a_k$ is the token sum of transaction \textit{k}, $h_k$ is the $k$-th transaction depth, i.e. the block order number from the current point, also known as a block height,  $K$ and $D$ are transaction contribution decrease parameters, that define how much the contribution of each transaction decreases over time, $\theta$ is the standard Heaviside step function, and $[ \cdot ]$ is a standard floor function. According to the formula, transaction contribution decreases with the rate $K$ over every $D$ number of blocks, created after this given transaction. The sum is taken over all the transactions of a deposit from the account \textit{i} to the account \textit{j}, depth of which lays between $H_0$ and $H_0+W$. $H_0$ and $W$ are the parameters, which values are currently equal to $H_0=0$ and $W=17280000$ blocks. In this setting only, the transactions from the time gap, duration of which is $W$ blocks, contribute to the financial activity index calculation. Thus, we obtain the coefficient of the incoming financial activity from the user $j$ to the user $i$ as follows:
 
-
-
-
-
-
-
 $$
 \hat{o}_{ij} = \begin{cases}
  w_{ji}-w_{ij}
@@ -158,7 +152,7 @@ $$
 \end{cases}
 $$
 
-After that the matrix, that was obtained,  is normalized so that the sum of elements in every column is equal to 1.
+After that the matrix, that was obtained, is standardized so that the sum of the elements in every column is equal to 1.
 
 
 $$
@@ -259,7 +253,7 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 \subsubsection{Social activity score calculation}
 
-U{\degree}OS blockchain interacts with a variety of DApps and registers a defined set of social transactions in the network. Each account issues outgoing activity and receives input from other users. Together these connections form a graph with directed edges between the account nodes. Social rates, obtained by the accounts, depend on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance rate, defined by the formula \ref{importance_rating}.  
+U{\degree}OS blockchain interacts with a variety of DApps and registers a defined set of social transactions in the network. Each account issues outgoing activity and receives input from other users. Together these connections form a graph with directed edges between the account nodes. Social rates, obtained by the accounts, depend on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance rate, defined by the formula (\ref{importance_rating}).  
 
 Social index calculation is based on several pieces of data. First, we define the matrix $\boldsymbol{V}$, that contains the information about the upvote transactions, with elements:
 	
@@ -271,7 +265,7 @@ Social index calculation is based on several pieces of data. First, we define th
 	\end{cases}
 	$$
 	
-	where $h_\alpha$ \textbf{define again here}
+	where $h_\alpha$ is the $\alpha$-th transactional height within the window with a fixed length $W$, i.e. the block height from the current time point.
 	
 	Second, the matrix $\boldsymbol{P}$ contains the information about the content owners:
 	$$
