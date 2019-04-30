@@ -406,14 +406,100 @@ Change of the blockchain algorithm parameters and the block validation procedure
 %\textcolor{red}{Comment: we might want to include here the details of implementation of the changes in the blockchain algorithm, achieved by the consensus on the \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}, and on the block production, achieved by consensus among validators.}
 
 
-\subsection{Key features of the algorithm: resistance to attacks}
+\subsection{DPoI vulnerability modeling and resistance to attacks}
 
+
+The main aim of modeling the behaviour of the algorithm is to find the vulnerabilities, accepted in the system, and to propose suitable improvements to the method. Here we research the weak spots of the DPoI consensus algorithm, that was described in details in the sections above. 
+
+According to the algorithm, financial and social activity indices are calculated for every account. These indices measure the useful input of each account in the network. Together these two indices contribute to the total importance index of the network participant, according to which the active accounts are rewarded for their network utility.
+
+Thus, there is an incentive to manipulate the DPoI algorithm in order to receive a large activity indices in absence of an actual fruitful exertion. 
+
+There are several possible vectors of attacks:
+
+\begin{itemize}
+ \item Creation of a subnetwork of isolated accounts and imitation of the useful activity between them, defined here as an \emph{account splitting attack}
+ \item Expansion of activity index of an existing active account, using additional set of accounts, known here as a \emph{rate expansion attack}
+ \item Security of the activity index from the alien accounts, that have a large activity index, denoted here as a \emph{rate stealing attack}
+ \item Increase of the rate of a single account in the attacking subnetwork, that contains a large number of accounts with a high or minimal rates, named here as a \emph{rate concentration attack} 
+ \end{itemize}
+
+We perform analysis of each type of these attacks below.
+\subsubsection{Test network}
+
+\subsubsection{Account splitting attack}
+
+\textbf{Financial index DPoI:} We consider an account splitting attack in a network, consisting of a base and an attacking subnetworks. Let us assume that the attacking subnetwork contains $N$ individual accounts. These users transfer some amount of assets between each other in a cyclical manner. The objective of the attack here is to obtain the maximum fraction of the activity index of the entire network.
+
+Financial activity index is calculated with the NCDAwareRank algorithm by setting the parameter $\mu$ to a value greater than $0$. In case when $\mu = 0$, NCDAwareRank procedure is reduced to a basic PageRank method.
+
+Based on the parameter $\mu$ and the size of the attacking subnetwork $N$, the modeling of the attack produces the following results:
+\\
+
+\begin{tabular}{|l|r|r|}
+\hline
+N & \multicolumn{2}{c|} {Activity index fraction}  \\
+\hline
+& $\mu=0$ & $\mu=0.1$ \\
+\hline
+10\% & 0.12973 & 0.12711 \\
+20\% & 0.22997 & 0.22583 \\
+30\% & 0.30965 & 0.30465 \\
+40\% & 0.37295 & 0.36741 \\
+50\% & 0.42668 & 0.42089 \\
+\hline
+\end{tabular}
+\\
+
+\begin{figure}[H]
+      \includegraphics[width=1\linewidth]{pictures/split_account_attack.pdf}
+     \caption{Attack results}
+      \label{fig:split_account_attack}
+\end{figure}
+From the visual representation on figure (\ref{fig:split_account_attack}), we conclude, that the total activity index increases with the number of accounts. Therefore, additional steps are necessary to protect the base subnetwork from this type of attack. Two of possible provisions here are the nonzero stack threshold for accounts, that participate in the rating calculation, or a nonzero cost for the initiation of a new account.
+
+We will discuss this problem in more details.
+
+\textbf{Social index DPoI:}
+
+\subsubsection{Rate expansion attack}
+
+\textbf{Financial index DPoI:} Let us consider the most active account in the base subnetwork. Financial activity index of this account is equal to 2.36e-03, i.e. 0.236\% of the overall network activity. 
+
+We also examine the attacking subnetwork which consists of $100$ accounts, that performs rate expansion attack. The aim of this attack is to obtain the maximal possible total activity index. All of the $100$ accounts cyclically transfer the assets through the subnetwork, starting and finishing with the largest account of the attacking subnetwork. The result is on figure (\ref{fig:chain-attack-index-amount-relation}).
+ 
+You can see that with the growth of the exchange volume with the largest account, the total activity index of the attacking network grows as well. This growth, however, slows down when reaching a threshold, which makes it ineffective to keep increasing the exchange volume. You can see also that the NCDAwareRank algorithm ($\mu=0.2$) is more resistant to this kind of attack, than the PageRank algorithm ($\mu=0$).
+
+Generally, it can be shown that there is a limit for the total activity index, that one can get with this kind of the attack. This limit is equal to:
+
+ $$
+ \frac{\mu+\eta}{1 - \mu - \eta} R
+ $$ 
+ 
+ $R$ is the activity index of the large account. Meaning of coefficients $\mu$ and $\eta$ are described in 
+
+This kind of an attack can be used to obtain the rating using one's own large account as well as an alien account.
+
+Obtaining a significant activity index requires a high exchange volume, which must be comparable to the total outgoing volume of the large account. Providing the exchange volume that is high enough is not an easy objective in case, when one is using an alien large account.
+
+\begin{figure}[H]
+      \includegraphics[width=1\linewidth]{pictures/chain-attack-index-amount-relation.pdf}
+      \caption{Results of the rate expansion attack}
+      \label{fig:chain-attack-index-amount-relation}
+\end{figure}
+
+\textbf{Social index DPoI:} 
+\subsubsection{Rate stealing attack}
+
+\subsubsection{Rate concentration attack}
+
+\subsubsection{Conclusions}
 Following mitigations are used in the project in order to reduce the risk of attacks:
 
 \begin{itemize}
   \item Only incoming transfers contribute to the importance index, which makes obtaining score from the existing accounts more difficult.
   \item There are stake thresholds for accounts, participating in the importance index calculation, and also the amount thresholds for transfers, which makes attacks more expensive for the attackers.
-  \item NCDAwareRank algorithm makes the system more resistant to \emph{splitting account attacks}\footnote{See Appendix 1 Glossary for definition}. This algorithm gives preference to accounts, tightly integrated into the common network.
+  %\item NCDAwareRank algorithm makes the system more resistant to \emph{splitting account attacks}\footnote{See Appendix 1 Glossary for definition}. This algorithm gives preference to accounts, tightly integrated into the common network.
   \item Coefficients $\omega_a$ and $\omega_s$ have relatively small values, this makes contribution of activity index and social index to total importance index significantly smaller than the stake contribution.
   \item Usage of the decaying weights makes effect of any fraud activity temporary. 
 \end{itemize}
