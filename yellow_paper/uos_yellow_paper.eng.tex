@@ -253,9 +253,9 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 \subsubsection{Social activity score calculation}
 
-U{\degree}OS blockchain interacts with a variety of DApps and registers a defined set of social transactions in the network. Each account issues outgoing activity and receives input from other users. Together these connections form a graph with directed edges between the account nodes. Social rates, obtained by the accounts, depend on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance rate, defined by the formula (\ref{importance_rating}).  
+U{\degree}OS blockchain can interact with a variety of DApps and register a defined set of social transactions in the network. Each account issues outgoing activity and receives input from other users. Together these connections form a graph with directed edges between the account nodes. Social rates, obtained by the accounts, depend on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance rate, defined by the formula (\ref{importance_rating}). At the moment algorithm collects \emph{upvote} and \emph{repost} transactions for the social activity rate computation. 
 
-Social index calculation is based on several pieces of data. First, we define the matrix $\boldsymbol{V}$, that contains the information about the upvote transactions, with elements:
+Thus, social index calculation is based on several pieces of data. First, we define the matrix $\boldsymbol{V}$, that contains the information about the upvote transactions, with elements:
 	
 	$$	
 	V_{ik} = \begin{cases}
@@ -265,7 +265,7 @@ Social index calculation is based on several pieces of data. First, we define th
 	\end{cases}
 	$$
 	
-	where $h_\alpha$ is the $\alpha$-th transactional height within the window with a fixed length $W$, i.e. the block height from the current time point.
+	where $h_\alpha$ is the $\alpha$-th transactional height within the sliding window of transaction blocks with a fixed length $W$, i.e. the block height from the current time point. Only the transactions, that fit within this window, are taken into account during the calculation of the social rate and overall DPoI importance rate during every computation cycle. Weight $V_{ik}$ of each transaction decays in $K$ times every $D$ blocks within the window $W$. Therefore, if a user does not receive new incoming upvote transactions, their social rate decays with time.
 	
 	Second, the matrix $\boldsymbol{P}$ contains the information about the content owners:
 	$$
@@ -284,22 +284,26 @@ Social index calculation is based on several pieces of data. First, we define th
 	 0 & \text{otherwise.}
 	\end{cases}
 	$$
+	The purpose of the matrix $\boldsymbol{R}$ is to redirect the contribution of the upvote transactions from reposts to the original authors. 
 	
 	Given these matrices, we attain the matrix $\boldsymbol{V'}$:
 	$$
 \boldsymbol{V'} = ( \boldsymbol{I} + \boldsymbol{R} ) \boldsymbol{V}
 $$
 	%$$
+	where $\boldsymbol{I}$ is a unit matrix.
 	
-	and the intermediate matrix $\boldsymbol{\hat{U}}$, with elements:
+	And the intermediate matrix $\boldsymbol{\hat{U}}$, with elements:
 	$$
 	\hat{U}_{ik} = max_n(P_{in} V'_{nk})
 	$$
-	As it is characterized by the matrix $\boldsymbol{V}$, weights of the individual transactions $V_{ik}$ decay with time. Some accounts, however, might not have any incoming activity for a period of time, longer than the window $W$. This results in the columns with zero elements in the matrix $\boldsymbol{V}$. Such condition violates the matrix stochasticity, that is necessary for the convergence of the iterative PageRank procedure. 
+	This matrix $\boldsymbol{\hat{U}}$ defines the relationship between the owner of the content and the user that sends the incoming upvote transactions. As you can see, the weight, that a voter transmits to the content owner, is the maximum of the weights of all pieces of content, that they upvote. It is based on the matrix $\boldsymbol{V}$, that represents the relationship between the voter and the content. Maximum value is used instead of sum to protect the algorithm from rate inflation as a result of automatic content generation and upvotes.
+	
+	As it is characterized by the matrix $\boldsymbol{V}$, weights of the individual transactions $V_{ik}$ decay with time. Some accounts, however, might not have any outgoing activity for a period of time, longer than the window $W$. This results in the columns with zero elements in the matrix $\boldsymbol{V}$. Such condition violates the matrix stochasticity, that is necessary for the convergence of the iterative PageRank procedure. 
 	
 	There are several ways to resolve the issue. First solution is to fill the empty columns with equal values, while second option is to add a value of $1$'s to the diagonal elements of the matrix. Nevertheless, these solutions have notable drawbacks. In a former case, we would diffuse the account rates, such that the difference between the rates of active and inactive accounts becomes insignificant. In a later case, own activity of the account would result in the user rate decrease, contrary to their interest.
 	
-	In order to provide effective decaying weights and preserve the matrix stochasticity, we add a special hidden account $h$, which accepts upvotes from every account. For this account:
+	In order to provide effective decaying weights and preserve the matrix stochasticity, we add a special hidden account $h$, which accepts upvotes from every account. Existence of this account ensures that there will be at least one outgoing transaction for each account in the network at every point in time. For this account:
 	
 	$$
 	\forall i \ne h \text{: } \hat{U}_{hi} = 1,
@@ -332,21 +336,22 @@ $$
 	\boldsymbol{\hat{\sigma}^a}^{(n+1)} = (\alpha \boldsymbol{U} + (1 - \alpha) \boldsymbol{T})\boldsymbol{ \hat{\sigma}^a}^{(n)}
 	\end{equation}
 	
-	where the teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts
+	where the teleportation matrix $\boldsymbol{T}$ contains the information about the initial weights of the accounts:
 	
 	\begin{equation}
 	    \label{teleportation_matrix_definition}
         \boldsymbol{T} = ((1 - \beta - \gamma) \boldsymbol{e} + \beta \boldsymbol{v} + \gamma \boldsymbol{s}) \boldsymbol{e}^T
 	\end{equation}
 	
-	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is а unit vector, $\boldsymbol{s}$ is the stack vector, and $\boldsymbol{v}$ is the validity vector. Utilization of a validity vector serves as the modification of a classical PageRank algorithm.
+	Here $\beta$ and $\gamma$ are the coefficients with values between 0 and 1, $\boldsymbol{e}$ is а unit vector, $\boldsymbol{s}$ is the stack vector, and $\boldsymbol{v}$ is the validity vector. Utilization of a validity vector serves as the modification of a classical PageRank algorithm. Coefficients $\beta$ and $\gamma$ in the matrix $\boldsymbol{T}$ determine what proportion of the overall priority is allocated to the equal values, defined by the unity vector $\boldsymbol{e}$, and what proportion belongs to the other two components.
 	
-	We should subtract the contribution of a stack from the rating vector, because social index of an account should not depend on its own stack:
+	After the computation converges, we should subtract the contribution of a stack from the rating vector, because social index of an account should solely depend on the incoming social transactions:
 	
 	$$
 	\boldsymbol{\dot{\sigma}^a} = \frac{1}{1 - (1-\alpha) \gamma}(\boldsymbol{\hat{\sigma}^a} - (1 - \alpha) \gamma \boldsymbol{s})
 	$$
-	
+In such a case, when stake of the user increases, it does not effect their own social activity rate, but only influences the social rates of other users. 
+
 	Finally, we must remove the rating vector of the hidden account. This operation changes norm of the rating vector, so we must standardize it to 1:
 	
 	$$
@@ -354,7 +359,7 @@ $$
 	$$
 	
 	
-	Based on $\boldsymbol{\sigma^a}$, we obtain values in $\boldsymbol{\sigma^c}$:
+	Based on the final social rates of the network participants $\boldsymbol{\sigma^a}$, we can obtain social rates of the content, represented by the vector $\boldsymbol{\sigma^c}$:
 	
 	$$
 	\boldsymbol{\sigma^c} = \boldsymbol{V'}\boldsymbol{\sigma^a}
@@ -438,9 +443,9 @@ Based on the parameter $\mu$ and the size of the attacking subnetwork $N$, the m
 
 \begin{tabular}{|l|r|r|}
 \hline
-N & \multicolumn{2}{c|} {Activity index fraction}  \\
+ & \multicolumn{2}{c|} {Activity index fraction}  \\
 \hline
-& $\mu=0$ & $\mu=0.1$ \\
+N & $\mu=0$ & $\mu=0.1$ \\
 \hline
 10\% & 0.12973 & 0.12711 \\
 20\% & 0.22997 & 0.22583 \\
