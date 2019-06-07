@@ -253,7 +253,7 @@ A cluster is a subset of vertices structurally connected to each other. It is po
 
 \subsubsection{Social activity score calculation}
 
-U{\degree}OS blockchain can interact with a variety of DApps and register a defined set of social transactions in the network. Each account issues outgoing activity and receives input from other users. Together these connections form a graph with directed edges between the account nodes. Social rates, obtained by the accounts, depend on the amount of the incoming social activity, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance rate, defined by the formula (\ref{importance_rating}). At the moment algorithm collects \emph{upvote} and \emph{repost} transactions for the social activity rate computation. 
+U{\degree}OS blockchain can interact with a variety of DApps to register a defined set of social transactions in the network. Each account issues outgoing social activity and receives social transactions from other users. Together these connections form a graph with the directed edges between the account nodes, that signify these social relations. Social rates, obtained by the accounts, depend on the amount of the incoming social activity alone, which constitutes the utility of the user to the whole network. We denote this rate as the social network activity index. It contributes to the general importance rate, defined by the formula (\ref{importance_rating}). At the moment algorithm collects \emph{upvote} and \emph{repost} transactions for the social activity rate computation. A \emph{downvote} transaction, that cancels a previously transferred \emph{upvote} is also possible. Such transaction subtracts the upvote, made by the same user only.
 
 Thus, social index calculation is based on several pieces of data. First, we define the matrix $\boldsymbol{V}$, that contains the information about the upvote transactions, with elements:
 	
@@ -265,7 +265,7 @@ Thus, social index calculation is based on several pieces of data. First, we def
 	\end{cases}
 	$$
 	
-	where $h_\alpha$ is the $\alpha$-th transactional height within the sliding window of transaction blocks with a fixed length $W$, i.e. the block height from the current time point. Only the transactions, that fit within this window, are taken into account during the calculation of the social rate and overall DPoI importance rate during every computation cycle. Weight $V_{ik}$ of each transaction decays in $K$ times every $D$ blocks within the window $W$. Therefore, if a user does not receive new incoming upvote transactions, their social rate decays with time.
+	where $h_\alpha$ is the $\alpha$-th transactional height within the sliding window of blocks of transactions with a fixed length $W$, i.e. the block height from the current time point. Only the transactions, that fit within this window, are taken into account during the calculation of the social rate and overall DPoI importance rate during every computational cycle. Weight $V_{ik}$ of each transaction decays in $K$ times every $D$ blocks within the window $W$. Therefore, if a user does not receive new incoming upvote transactions, their social rate decays with time.
 	
 	Second, the matrix $\boldsymbol{P}$ contains the information about the content owners:
 	$$
@@ -297,7 +297,7 @@ $$
 	$$
 	\hat{U}_{ik} = max_n(P_{in} V'_{nk})
 	$$
-	This matrix $\boldsymbol{\hat{U}}$ defines the relationship between the owner of the content and the user that sends the incoming upvote transactions. As you can see, the weight, that a voter transmits to the content owner, is the maximum of the weights of all pieces of content, that they upvote. It is based on the matrix $\boldsymbol{V}$, that represents the relationship between the voter and the content. Maximum value is used instead of sum to protect the algorithm from rate inflation as a result of automatic content generation and upvotes.
+	This matrix $\boldsymbol{\hat{U}}$ defines the relation between the owner of the content and the user that sends the incoming upvote transactions. As one can see, the weight, that a voter transmits to the content owner, is the maximum of the weights of all pieces of the content, that they upvote. This weight is based on the matrix $\boldsymbol{V}$, that represents the association between the voter and the content. Maximum value is used instead of the sum function in order to protect the algorithm from rate inflation as a result of automatic content generation and upvotes.
 	
 	As it is characterized by the matrix $\boldsymbol{V}$, weights of the individual transactions $V_{ik}$ decay with time. Some accounts, however, might not have any outgoing activity for a period of time, longer than the window $W$. This results in the columns with zero elements in the matrix $\boldsymbol{V}$. Such condition violates the matrix stochasticity, that is necessary for the convergence of the iterative PageRank procedure. 
 	
@@ -320,7 +320,7 @@ $$
 
 	Unlike solutions, outlined previously, our answer does not have the mentioned drawbacks. Conversely, it presents several advantages. First of them is that we can now measure the activity of the network with regards to a fixed standard. We can monitor what proportion of the overall network rate is received by the hidden account, which indicates the rate of activity in the network — the higher is the rate of this account, the lower is the network activity. Second, now we have a standard, relative to which we can observe the weights decay. Since transactions towards the hidden account happen regularly, the relative balance between the social index scores of the hidden account and other nodes demonstrates the level of score decay.
 	
-	Besides above mentioned matrices, calculations of social index scores are based on the stack vector $\boldsymbol{s}$ and a validity weight vector $\boldsymbol{v}$, containing the validity values for every account. These values originate from the trust relationships on the network, and are described in details in the section 2.1.3 below.
+	Besides above mentioned matrices, calculations of social index scores are based on the stack vector $\boldsymbol{s}$ and a validity weight vector $\boldsymbol{v}$, containing the validity values for every account. These values originate from the trust relationships on the network, and are described in details in the section \ref{validity} below.
 	
 	Based on these data structures, we can calculate social activity vectors for the accounts $\boldsymbol{\sigma^a}$ and for the content $\boldsymbol{\sigma^c}$. These vectors are standardized to 1:
 	
@@ -366,17 +366,17 @@ In such a case, when stake of the user increases, it does not effect their own s
 	$$
 	
 \subsubsection{Validity trust network}
-
-	Normally, PageRank starts the calculation with the vector of equaly distributed weights, but in our algorithm for social index rate calculation, we modify this vector to integrate the system of trusts in our calculations. This is our innovation, that helps further protect the network from the botnets. Trusts are assigned by the members of the network to other members in a manual fashion and serve as a validation of their accounts. The user transmits trust proportionally to their stack amount. Such a condition ensures that a high level of trust is provided only by the meaningful users in the network. The higher is the level of overall trust that account obtains the higher is potentially the social index rate, they might receive.
+\label{validity}
+	Classical PageRank procedure starts the calculation with the vector of equaly distributed weights, but in our algorithm for social index rate calculation, we modify this vector to integrate the system of trusts in our estimations. This is the modification, that helps further protect the network from the botnets. Trusts are assigned by the members of the network to other members in a manual fashion and serve as a validation of their accounts. The user transmits trust proportionally to their stack amount. Such a condition ensures that a high level of trust is provided only by the meaningful users in the network. The higher is the level of overall trust that account obtains the higher is potentially the social index rate, that they might receive.
 	
-The validity vector $\boldsymbol{v}$ is used in the formula (\ref{teleportation_matrix_definition}). As mentioned before, it is invented in order to implement additional botnet attack protection and is calculated using the PageRank algorithm.
+The validity vector $\boldsymbol{v}$ is used in the formula (\ref{teleportation_matrix_definition}). As mentioned before, it is invented in order to implement additional botnet attack protection and is calculated using the PageRank algorithm as well.
 	
 	\begin{equation}
 	\label{trust_pagerank}
 	\boldsymbol{\hat{v}}^{n+1} = (\alpha O_T+(1-\alpha)T_T) \boldsymbol{\hat{v}}^{n}
 	\end{equation}
 	
-	Here $O_T$ is outlink matrix, that is based on the \textit{trust} relations, $T_T$ is the teleportation matrix:
+	Here $O_T$ is an outlink matrix, that is based on the \textit{trust} relations, $T_T$ is the teleportation matrix:
 	
 	$$
         \boldsymbol{T_T} = ((1 - \lambda) \boldsymbol{e} + \lambda \boldsymbol{s}) \boldsymbol{e}^T
@@ -463,8 +463,7 @@ N & $\mu=0$ & $\mu=0.1$ \\
 \end{figure}
 From the visual representation on figure (\ref{fig:split_account_attack}), we conclude, that the total activity index increases with the number of accounts. Therefore, additional steps are necessary to protect the base subnetwork from this type of attack. Two of possible provisions here are the nonzero stack threshold for accounts, that participate in the rating calculation, or a nonzero cost for the initiation of a new account.
 
-We will discuss this problem in more details.
-
+We will discuss this problem in more details.\\
 \textbf{Social index DPoI:}
 
 \subsubsection{Rate expansion attack}
@@ -485,14 +484,13 @@ Generally, it can be shown that there is a limit for the total activity index, t
 
 This kind of an attack can be used to obtain the rating using one's own large account as well as an alien account.
 
-Obtaining a significant activity index requires a high exchange volume, which must be comparable to the total outgoing volume of the large account. Providing the exchange volume that is high enough is not an easy objective in case, when one is using an alien large account.
+Obtaining a significant activity index requires a high exchange volume, which must be comparable to the total outgoing volume of the large account. Providing the exchange volume that is high enough is not an easy objective in case, when one is using an alien large account.\\
 
 \begin{figure}[H]
       \includegraphics[width=1\linewidth]{pictures/chain-attack-index-amount-relation.pdf}
       \caption{Results of the rate expansion attack}
       \label{fig:chain-attack-index-amount-relation}
 \end{figure}
-
 \textbf{Social index DPoI:} 
 \subsubsection{Rate stealing attack}
 
@@ -512,13 +510,13 @@ Following mitigations are used in the project in order to reduce the risk of att
 
 \section{Emission}
 
-\subsection{U{\degree}OS token utilization}
+\subsection{UOS token utilization}
 
-U{\degree}OS tokens constitute the core of our crypto-economy. They are used in the system in several ways:
+UOS tokens constitute the core currency in our cryptoeconomy system. They are used in several ways:
 
 \begin{itemize}
-\item to allocate CPU and bandwidth resources, using staked token amounts. Only core U{\degree}OS tokens can be used for CPU and bandwidth resource allocation.
-\item to purchase other resources, such as RAM, and perform other forms of financial transfers via smart contracts using unstaked tokens. Potentially, many types of tokens can be used for these activities.
+\item to allocate CPU and bandwidth resources, using staked token amounts. Only core UOS tokens can be used for CPU and bandwidth resource allocation.
+\item to purchase other resources, such as RAM and storage, and perform other forms of financial transfers via smart contracts using unstaked tokens. Potentially, many types of custom tokens can be used for these activities.
 \item to vote for block producers and \emph{calculator nodes}\footnote{See Appendix 1 Glossary for definition}. The amount of staked tokens, owned by the account, contributes to the user's importance during the voting process.
 \item to increase the importance score and receive the dynamic emission. Amount of tokens staked by the account directly influences the importance received by the user and the amount of dynamic emission.
 \end{itemize}
@@ -526,12 +524,19 @@ U{\degree}OS tokens constitute the core of our crypto-economy. They are used in 
 Thus, staked core tokens are used for the resource allocation and play an important part in emission and importance calculation, while unstaked tokens can be used in direct transfers. 
 %The amount of transactions processed directly depends on the available computing power provided by network members. To allocate the resources efficiently and to avoid spam attacks, a fee in the protocol core cryptographic token is levied on the operations within the U{\degree}OS network. The protocol allows a user to make token transfer transactions between the network members and launch system smart contracts, e.g. multi-signature, account registration, user tokens creation and so on.
 
-Emission amount at launch constitutes one billion of protocol tokens, distributed to the original network accounts to start the protocol. The U{\degree}OS project implements adaptive emission. The emission volume is calculated regularly, in a certain time interval, $t_0, t_1, ... t_i$, where $t_{i+1} = t_i + T$. The volume of emission depends on the network activity growth in the preceding time period $T$.
+\subsection{Emission distribution}
+Emission amount at launch constitutes one billion of core protocol tokens, distributed to the original network accounts to start the protocol. Further after that, U{\degree}OS project implements adaptive emission. Emission volume is calculated regularly in the certain time intervals $t_0, t_1, ... t_i$, where $t_{i+1} = t_i + T$, according to the procedures in \ref{networkact} and \ref{emissioncalc}. The volume of emission depends on the network activity growth in the preceding time period $T$ and on the token exchange rate fluctuation on major stock exchanges during the same period. Briefly, emission is allocated if and only if the two following conditions are satisfied:
+
+\begin{itemize}
+\item total network activity exceeds the maximum value for any previous period since the network launch
+\item UOS token rate grows or remains the same relative to the previous period of time
+\end{itemize}
+UOS token rate is estimated as the arithmetic mean of the token rates, issued by the major stock exchanges. In addition to above mentioned conditions, the period of token unstake in the U{\degree}OS blockchain increases, when the token rate drops. This period fluctuates between three and ninety days and can change by three days only within the twenty four hours time frame, according to the function that depends on the token exchange rate.
 
 
-\subsection{Network activity calculation for a period of time}
-
-In order to calculate the emission, we first need to calculate the network activity for the unit time period $T$, defined by the U{\degree}OS protocol. To begin, we calculate the matrix of weights, according to the formula:
+\subsubsection{Network activity calculation for a period of time}
+\label{networkact}
+First of all, in order to calculate the emission, we need to calculate the network activity for the time period $T$, defined by the U{\degree}OS protocol. To begin, we calculate the matrix of weights, according to the formula:
 
 
 
@@ -553,7 +558,7 @@ l_{ij}(t_n) = \begin{cases}
 \end{cases}
 $$
 
-We calculate the activity in a given time frame as:
+We estimate the activity in a given time frame as:
 
 
 
@@ -561,13 +566,13 @@ $$
 A(t_n) = \sum_{i,j} l_{ij}(t_n)
 $$
 
-In this way, activity is calculated as a number of connections between active accounts in a set timeframe. 
+In this way, activity is calculated as a number of connections between active accounts in a set time window. 
 
 
 
-\subsection{Emission value calculation}
-
-Target emission value $E_T$ depends on the network activity growth. It defines the upper bound of the aggregate amount of the emission, that is achievable with the following activity value $A$:
+\subsubsection{Emission value calculation}
+\label{emissioncalc}
+Target emission value $E_T$ depends on the network activity growth. It defines the upper bound of the aggregate amount of the emission, that is achievable given the activity value $A$:
 
 
 
@@ -583,7 +588,7 @@ E_T(t_n) = \begin{cases}
 \end{cases}
 $$
 
-Here $K_E$ is a coefficient that defines the maximum value of the emission with the activity increased by 1. $A_{max}(t_{n-1})$ is the previous maximum value since the system launch:
+Here $K_E$ is a coefficient, that defines the maximum value of the emission, provided the increased activity. $A_{max}(t_{n-1})$ is the previous maximum value since the system launch:
 
 
 
@@ -607,14 +612,14 @@ $$
     \lambda = (1 + \frac{L}{100})^{1/N}-1
 $$
 
-Here $N$ is the number of emission issues per year.
+And $N$ is the number of emission issues per year.
 
 
 
 $f(x)$ - is a sigmoidal function. In the present implementation of the algorithm a hyperbolic tangent is used as this function. 
 
 
-$\kappa$ is a coefficient between 0 and 1 and it defines the speed at which a full emission approaches the target emission $E_T$ if the activity level remains the same over the long term.
+Coefficient $\kappa$ is a number between 0 and 1 and it defines the speed at which a full emission approaches the target emission $E_T$ if the activity level remains the same over the long term.
 
 
 
