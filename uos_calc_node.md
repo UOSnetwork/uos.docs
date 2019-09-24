@@ -303,14 +303,15 @@ Now you have a locked wallet with your Active private key.
 Run the following command:
 
 ```
-cleos push action eosio regcalc '["ACCOUNT", "ACCOUNT_INFO"]' -p ACCOUNT
+cleos push action eosio regcalc '["NAME", "URL", LOCATION_CODE]' -p NAME
 ```
 
 where
 
 * `-p` — Permission level to authorize the action.
-* `ACCOUNT_NAME` — This is your Calculator Node account name.
-* `ACCOUNT_INFO` — Additional information for your account identification in the Calculator Node list; usually your website or a U°Community link.
+* `NAME` — This is your Calculator Node account name.
+* `URL` — Additional information for your account identification in the Calculator Node list; usually your website or a U°Community link.
+* `LOCATION_CODE` — Location code of the account
 
 You should now be a Standby Calculator Node on the U°OS blockchain.
 
