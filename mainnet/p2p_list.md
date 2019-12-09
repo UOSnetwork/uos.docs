@@ -1,4 +1,4 @@
-###P2P List for UOS Network
+### P2P List for UOS Network
 
 ```
 p2p-peer-address = mainnet-node-1.uos.network:9876
