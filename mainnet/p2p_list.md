@@ -10,4 +10,5 @@ p2p-peer-address = uos.iamredbar.xyz:9876
 p2p-peer-address = uos-api.infinitybloc.io:9876
 p2p-peer-address = p2p.uos.eosrio.io:8062
 p2p-peer-address = p2p.uossweden.org:19076
+p2p-peer-address = uos.eosargentina.io:9867
 ```
