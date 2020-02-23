@@ -1,11 +1,14 @@
 ### Resources for UOS Network
 
-#### API
-* Api node - https://api.uos.network:7889
-* History (v1) node - https://history.uos.network:7889 (You can use it with eos-voter)
-* Hyperion node - https://hapi.uos.network
-* Hyperion & v1 API - https://api.uossweden.org
+#### Hyperion & v1 API
+* https://api.uos.network (v1 and v2 via Hyperion)
+* https://api.uossweden.org
+* https://uos.eosargentina.io
+* https://api.uos.eosrio.io
 
+#### Snapshots
+* https://uos-snapshot.fra1.cdn.digitaloceanspaces.com/
+* https://snapshots.uossweden.org/
 #### Explorers
 * https://explorer.uos.network/
 
