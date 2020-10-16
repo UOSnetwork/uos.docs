@@ -65,7 +65,7 @@ Working with Issues <a name="issues"></a>
 
 ### Issue tracker
 
-Click ``Issues`` in the repository to see the reported issues.
+Click on ''issues'' in the repository to check the reported errors.
 
 ### Submitting an Issue
 
@@ -74,7 +74,7 @@ See [Issue Template](issue_template.md).
 Working with UIPs <a name="uips"></a>
 -------------------------------------
 
-UIP is short for U°OS Improvement Proposal.
+UIP stands for U°OS Improvement Proposal.
 
 A UIP is what you submit to improve the U°OS protocol. A UIP is always a community decision and must go through a detailed discussion with the community members.
 
@@ -84,7 +84,7 @@ UIPs are tracked in the [uos.uip](https://github.com/UOSnetwork/uos.uip) reposit
 
 ### Submitting a UIP
 
-Submit a UIP as a pull request to the UIP repository: github/UOSnetwork/repo/
+Submit a UIP as a pull request to the U°OS Improvement Proposal repository: github/UOSnetwork/repo/
 
 See [UIP Template](../../../uos.uip/blob/master/uip_template.md).
 
