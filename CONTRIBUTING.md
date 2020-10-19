@@ -1,4 +1,4 @@
-Contributing to U°OS
+## Contributing to U°OS
 ====================
 
 Table of Contents
@@ -23,7 +23,7 @@ Table of Contents
 Introduction <a name="introduction"></a>
 ----------------------------------------
 
-### Intended audience
+## Intended audience
 
 * Project contributors
 * App developers
@@ -31,7 +31,7 @@ Introduction <a name="introduction"></a>
 * Issue reporters
 * Improvement reporters
 
-### Core components:
+## Core components:
 
 * Block Producer Node
 * Calculator Node
